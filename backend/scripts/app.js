@@ -3,6 +3,7 @@ import morgan from "morgan";
 import createError from "http-errors";
 import helmet from "helmet";
 import cors from "cors";
+import userRouter from "./routes/users.js";
 // Handle async errors without try and catch blocks
 // consider adding require("express-async-errors");
 
@@ -14,6 +15,9 @@ app.use(helmet());
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 // If form objects needed, use: app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+//Routes
+app.use("/api/users", userRouter);
 
 // Default route
 app.use((req, res, next) => {
