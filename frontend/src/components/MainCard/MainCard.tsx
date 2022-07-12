@@ -17,7 +17,7 @@ export const MainCard = ({
         </Typography>
       </Box>
       <Divider />
-      <Stack spacing={2.5} padding={"25px 40px 40px 40px"}>
+      <Stack spacing={3} padding={"25px 40px 40px 40px"}>
         {children}
       </Stack>
     </Paper>

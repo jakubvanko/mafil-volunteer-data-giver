@@ -3,6 +3,7 @@ import { createTheme, CssBaseline } from "@mui/material";
 import { Header } from "./scenes/Header/Header";
 import { Login } from "./scenes/Login/Login";
 import { ThemeProvider } from "@emotion/react";
+import { User } from "./scenes/User/User";
 
 const theme = createTheme({
   palette: {
@@ -18,7 +19,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline>
           <Header />
-          <Login />
+          <User />
         </CssBaseline>
       </ThemeProvider>
     </StrictMode>

@@ -8,7 +8,7 @@ export const MainPage = ({ children }: PropsWithChildren) => {
       container
       justifyContent="center"
       alignItems="center"
-      paddingBottom={"calc(64px + 40px)"}
+      paddingBottom={"calc(64px)"}
     >
       {children}
     </Grid>
