@@ -1,10 +1,10 @@
 import { Button, Link, Stack, Typography, Box } from "@mui/material";
-import { MainCard } from "../../components/MainCard/MainCard";
-import { MainPage } from "../../components/MainPage/MainPage";
+import { MainCard } from "../MainCard/MainCard";
+import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
 
-export const User = () => {
+export const UserPage = () => {
   return (
-    <MainPage>
+    <MainPageContainer>
       <MainCard headingText="Stiahnuť údaje">
         <Typography variant="body1" sx={{ lineHeight: "2em" }}>
           Teraz si môžete stiahnuť svoje údaje kliknutím na zelené tlačidlo.
@@ -39,6 +39,6 @@ export const User = () => {
           </Box>
         </Stack>
       </MainCard>
-    </MainPage>
+    </MainPageContainer>
   );
 };

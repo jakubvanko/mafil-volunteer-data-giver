@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { MainCard } from "../../components/MainCard/MainCard";
-import { MainPage } from "../../components/MainPage/MainPage";
+import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
 
 interface BasicMessagePageProps {
   headingText: string;
@@ -12,13 +12,13 @@ export const BasicMessagePage = ({
   descriptionText,
 }: BasicMessagePageProps) => {
   return (
-    <MainPage>
+    <MainPageContainer>
       <MainCard headingText={headingText}>
         <Typography variant="body1">{descriptionText}</Typography>
         <Button fullWidth variant="contained">
           Prejsť na webstránku laboratória mafil
         </Button>
       </MainCard>
-    </MainPage>
+    </MainPageContainer>
   );
 };

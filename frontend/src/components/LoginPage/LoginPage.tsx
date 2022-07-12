@@ -1,10 +1,10 @@
 import { Typography, TextField, Button } from "@mui/material";
-import { MainCard } from "../../components/MainCard/MainCard";
-import { MainPage } from "../../components/MainPage/MainPage";
+import { MainCard } from "../MainCard/MainCard";
+import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
 
-export const Login = () => {
+export const LoginPage = () => {
   return (
-    <MainPage>
+    <MainPageContainer>
       <MainCard headingText="Prístup k údajom">
         <Typography variant="body1">
           Pre prístup k údajom prosím zadajte svoje rodné číslo.
@@ -19,6 +19,6 @@ export const Login = () => {
           Prihlásiť sa
         </Button>
       </MainCard>
-    </MainPage>
+    </MainPageContainer>
   );
 };

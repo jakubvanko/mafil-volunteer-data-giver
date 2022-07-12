@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { PropsWithChildren } from "react";
 
-export const MainPage = ({ children }: PropsWithChildren) => {
+export const MainPageContainer = ({ children }: PropsWithChildren) => {
   return (
     <Grid
       minHeight={"calc(100vh - 64px)"}

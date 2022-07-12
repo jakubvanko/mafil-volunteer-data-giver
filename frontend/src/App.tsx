@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createTheme, CssBaseline } from "@mui/material";
-import { Header } from "./scenes/Header/Header";
-import { Login } from "./scenes/Login/Login";
+import { Header } from "./components/Header/Header";
+import { LoginPage } from "./components/LoginPage/LoginPage";
 import { ThemeProvider } from "@emotion/react";
-import { User } from "./scenes/User/User";
+import { UserPage } from "./components/UserPage/UserPage";
 
 const theme = createTheme({
   palette: {
@@ -19,7 +19,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline>
           <Header />
-          <User />
+          <UserPage />
         </CssBaseline>
       </ThemeProvider>
     </StrictMode>
