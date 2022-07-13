@@ -12,12 +12,12 @@ export const LoginPage = () => {
         <Typography variant="body1">{t("login.description")}</Typography>
         <TextField
           id="textfield-code"
-          label="Rodné číslo"
+          label={t("login.textFieldLabel")}
           variant="filled"
           fullWidth
         />
         <Button fullWidth variant="contained">
-          Prihlásiť sa
+          {t("login.buttonText")}
         </Button>
       </MainCard>
     </MainPageContainer>

@@ -1,4 +1,5 @@
 import { Button, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { MainCard } from "../../components/MainCard/MainCard";
 import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
 
@@ -11,12 +12,14 @@ export const BasicMessagePage = ({
   headingText,
   descriptionText,
 }: BasicMessagePageProps) => {
+  const { t } = useTranslation();
+
   return (
     <MainPageContainer>
       <MainCard headingText={headingText}>
         <Typography variant="body1">{descriptionText}</Typography>
         <Button fullWidth variant="contained">
-          Prejsť na webstránku laboratória mafil
+          {t("common.buttonOutLinkText")}
         </Button>
       </MainCard>
     </MainPageContainer>

@@ -6,6 +6,7 @@ import { UserPage } from "./components/UserPage/UserPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { BasicMessagePage } from "./components/BasicMessagePage/BasicMessagePage";
 import { applyLocalization } from "./i18n";
+import { useTranslation } from "react-i18next";
 
 applyLocalization();
 
@@ -18,6 +19,8 @@ const theme = createTheme({
 });
 
 const App = () => {
+  const { t } = useTranslation();
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -30,8 +33,8 @@ const App = () => {
               path="logout"
               element={
                 <BasicMessagePage
-                  headingText="Boli ste odhlásení"
-                  descriptionText="Boli ste úspešne odhlásení. Teraz môžete webstránku bezpečne opustiť."
+                  headingText={t("logout.headingText")}
+                  descriptionText={t("logout.descriptionText")}
                 />
               }
             />
@@ -39,8 +42,8 @@ const App = () => {
               path="deleted"
               element={
                 <BasicMessagePage
-                  headingText="Váš prihlasovací odkaz bol zneplatnený"
-                  descriptionText="Váš prihlasovací odkaz bol zneplatnený. Ďakujeme za účasť v našej štúdii."
+                  headingText={t("deleted.headingText")}
+                  descriptionText={t("deleted.descriptionText")}
                 />
               }
             />
@@ -48,8 +51,8 @@ const App = () => {
               path="*"
               element={
                 <BasicMessagePage
-                  headingText="Chyba 404"
-                  descriptionText="Zadaná stránka neexistuje alebo bola odstránená."
+                  headingText={t("error.headingText")}
+                  descriptionText={t("error.descriptionText")}
                 />
               }
             />
