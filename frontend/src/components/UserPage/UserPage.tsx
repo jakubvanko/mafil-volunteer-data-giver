@@ -12,7 +12,7 @@ export const UserPage = () => {
         headingText={t("user.headingText")}
         secondaryHeadingElement={
           <Typography variant="body2">
-            {t("user.loginLinkAvailability")} 25.7.2022
+            {t("user.loginLinkAvailability")} XX.XX.XXXX
           </Typography>
         }
       >
