@@ -5,6 +5,9 @@ import { ThemeProvider } from "@emotion/react";
 import { UserPage } from "./components/UserPage/UserPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { BasicMessagePage } from "./components/BasicMessagePage/BasicMessagePage";
+import { applyLocalization } from "./i18n";
+
+applyLocalization();
 
 const theme = createTheme({
   palette: {

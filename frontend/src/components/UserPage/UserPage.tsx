@@ -19,7 +19,12 @@ export const UserPage = () => {
           Berte prosím na vedomie, že sa jedná o{" "}
           <b color="danger">citlivé medicínske údaje.</b>
           <br />V prípade ak chcete zneplatiť svoj prihlasovací odkaz, môžete
-          tak urobiť kliknutím na červené tlačidlo.
+          tak urobiť kliknutím na červené tlačidlo. <br />
+          Ak sa chcete{" "}
+          <b>
+            odhlásiť, jednoducho zatvorte túto webstránku alebo{" "}
+            <Link>kliknite TU</Link>.
+          </b>
         </Typography>
         <Stack direction="row" spacing={3}>
           <Box width={"100%"}>

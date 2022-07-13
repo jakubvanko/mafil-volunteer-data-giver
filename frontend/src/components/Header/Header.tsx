@@ -6,7 +6,42 @@ import {
   Link,
   Stack,
 } from "@mui/material";
-import { SK, CZ, GB } from "country-flag-icons/react/3x2";
+import { SK, CZ, GB, FlagComponent } from "country-flag-icons/react/3x2";
+import { useTranslation } from "react-i18next";
+
+interface LanguageBreadcrumbButtonProps {
+  languageName: string;
+  languageLabel: string;
+  LanguageFlag: FlagComponent;
+}
+
+const LanguageBreadcrumbButton = ({
+  languageName,
+  languageLabel,
+  LanguageFlag,
+}: LanguageBreadcrumbButtonProps) => {
+  const { i18n } = useTranslation();
+
+  return (
+    <Link
+      component="button"
+      underline={i18n.resolvedLanguage === languageLabel ? "always" : "hover"}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: "5px",
+        textDecorationColor: "inherit",
+      }}
+      color="#fff"
+      onClick={() => i18n.changeLanguage(languageLabel)}
+    >
+      <SvgIcon>
+        <LanguageFlag />
+      </SvgIcon>
+      {languageName}
+    </Link>
+  );
+};
 
 export const Header = () => {
   return (
@@ -24,51 +59,21 @@ export const Header = () => {
             alt="Mafil-Ceitec logo"
           />
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
-              component="button"
-              underline="hover"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-              }}
-              color="white"
-            >
-              <SvgIcon>
-                <SK />
-              </SvgIcon>
-              Slovenčina
-            </Link>
-            <Link
-              component="button"
-              underline="hover"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-              }}
-              color="white"
-            >
-              <SvgIcon>
-                <CZ />
-              </SvgIcon>
-              Čeština
-            </Link>
-            <Link
-              component="button"
-              underline="hover"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-              }}
-              color="white"
-            >
-              <SvgIcon>
-                <GB />
-              </SvgIcon>
-              English
-            </Link>
+            <LanguageBreadcrumbButton
+              languageName="Čeština"
+              languageLabel="cz"
+              LanguageFlag={CZ}
+            />
+            <LanguageBreadcrumbButton
+              languageName="Slovenčina"
+              languageLabel="sk"
+              LanguageFlag={SK}
+            />
+            <LanguageBreadcrumbButton
+              languageName="English"
+              languageLabel="en"
+              LanguageFlag={GB}
+            />
           </Breadcrumbs>
         </Stack>
       </Toolbar>
