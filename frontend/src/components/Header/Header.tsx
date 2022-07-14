@@ -5,6 +5,7 @@ import {
   Toolbar,
   Link,
   Stack,
+  Box,
 } from "@mui/material";
 import { SK, CZ, GB, FlagComponent } from "country-flag-icons/react/3x2";
 import { useTranslation } from "react-i18next";
@@ -53,11 +54,13 @@ export const Header = () => {
           justifyContent="space-between"
           width={"100%"}
         >
-          <img
-            src="https://mafil.ceitec.cz/files/287/thumb/157-logo-mafil-transp2-0x0.png"
-            height={40}
-            alt="Mafil-Ceitec logo"
-          />
+          <Link
+            sx={{ lineHeight: "0px" }}
+            href="https://mafil.ceitec.cz/"
+            rel="noopener noreferrer"
+          >
+            <img src="/logo_mafil.png" height={40} alt="Mafil-Ceitec logo" />
+          </Link>
           <Breadcrumbs aria-label="breadcrumb">
             <LanguageBreadcrumbButton
               languageName="Čeština"

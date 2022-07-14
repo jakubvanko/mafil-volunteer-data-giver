@@ -2,6 +2,7 @@ import { Button, Link, Stack, Typography, Box } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { MainCard } from "../MainCard/MainCard";
 import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
+import { Link as RouterLink } from "react-router-dom";
 
 export const UserPage = () => {
   const { t } = useTranslation();
@@ -22,13 +23,19 @@ export const UserPage = () => {
             components={{
               bold: <b />,
               link1: <Link href="" />,
-              link2: <Link href="" />,
+              link2: <Link component={RouterLink} to="../logout" />,
             }}
           />
         </Typography>
         <Stack direction="row" spacing={3}>
           <Box width={"100%"}>
-            <Button fullWidth variant="contained" color="success">
+            <Button
+              fullWidth
+              variant="contained"
+              color="success"
+              href="path_to_file"
+              download="User_anatomical_14_1_2022"
+            >
               {t("user.buttonDownloadDataText")}
             </Button>
           </Box>

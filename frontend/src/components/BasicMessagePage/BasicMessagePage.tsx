@@ -18,7 +18,12 @@ export const BasicMessagePage = ({
     <MainPageContainer>
       <MainCard headingText={headingText}>
         <Typography variant="body1">{descriptionText}</Typography>
-        <Button fullWidth variant="contained">
+        <Button
+          fullWidth
+          variant="contained"
+          href="https://mafil.ceitec.cz/"
+          rel="noopener noreferrer"
+        >
           {t("common.buttonOutLinkText")}
         </Button>
       </MainCard>
