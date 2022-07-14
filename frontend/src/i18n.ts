@@ -43,6 +43,17 @@ const translationEn = {
     descriptionText:
       "You have been successfully logged out. You can now safely leave the website.",
   },
+  invalidate: {
+    headingText: "Invalidate login link",
+    textFieldLabel: "Verification word",
+    buttonGoBack: "Go back",
+    descriptionText: `By invalidating the login link, you will immediately lose access to downloading your data. <br/>
+    Invalidation of the login link <bold>CANNOT BE REVERSED</bold>. <br/>
+    After invalidation, you will be immediately logged out of all devices. <br/>
+    <br/>
+    If you really want to invalidate your login link, type the word <bold>ANO</bold> in the following field.
+    `,
+  },
 };
 
 const translationCz = {
@@ -59,7 +70,7 @@ const translationCz = {
     buttonDownloadDataText: "Stáhnout údaje",
     buttonDisableUserText: "Zneplatnit přihlašovací odkaz",
     headingText: "Stáhnout údaje",
-    loginLinkAvailability: "Přihlašovací link platný do",
+    loginLinkAvailability: "Přihlašovací odkaz platný do",
     downloadInfoText: `Nyní si můžete stáhnout své údaje klepnutím na zelené tlačítko. <br/>
     Po stisku tlačítka se vám do počítače stáhne soubor .zip s vašimi daty. <br/>
     Tento zip archiv obsahuje: <br/>
@@ -85,6 +96,17 @@ const translationCz = {
     descriptionText:
       "Byli jste úspěšně odhlášeni. Nyní můžete webovou stránku bezpečně opustit.",
   },
+  invalidate: {
+    headingText: "Zneplatnit přihlašovací odkaz",
+    textFieldLabel: "Ověřovací slovo",
+    buttonGoBack: "Vrátit se zpět",
+    descriptionText: `Zneplatněním přihlašovacího odkazu ihned ztratíte přístup ke stažení dat. <br/>
+    Zneplatnění přihlašovacího odkazu je <bold>NEVRATNÉ</bold>. <br/>
+    Po zneplatnění budete okamžitě odhlášeni ze všech zařízení. <br/>
+    <br/>
+    Chcete-li opravdu zneplatnit svůj přihlašovací odkaz, napište do následujícího pole slovo <bold>ANO</bold>.
+    `,
+  },
 };
 
 const translationSk = {
@@ -101,7 +123,7 @@ const translationSk = {
     buttonDownloadDataText: "Stiahnuť údaje",
     buttonDisableUserText: "Zneplatniť prihlasovací odkaz",
     headingText: "Stiahnuť údaje",
-    loginLinkAvailability: "Prihlasovací link platný do",
+    loginLinkAvailability: "Prihlasovací odkaz platný do",
     downloadInfoText: `Teraz si môžete stiahnuť svoje údaje kliknutím na zelené tlačidlo. <br/>
     Po stlačení tlačidla sa vám do počítača stiahne súbor .zip s vašimi dátami. <br/>
     Tento .zip archív obsahuje: <br/>
@@ -126,6 +148,17 @@ const translationSk = {
     headingText: "Boli ste odhlásení",
     descriptionText:
       "Boli ste úspešne odhlásení. Teraz môžete webstránku bezpečne opustiť.",
+  },
+  invalidate: {
+    headingText: "Zneplatniť prihlasovací odkaz",
+    textFieldLabel: "Overovacie slovo",
+    buttonGoBack: "Vrátiť sa späť",
+    descriptionText: `Zneplatnením prihlasovacieho odkazu ihneď stratíte prístup k stiahnutiu dát. <br/>
+    Zneplatnenie prihlasovacieho odkazu je <bold>NEVRATNÉ</bold>. <br/>
+    Po zneplatnení budete okamžite odhlásení zo všetkých zariadení. <br/>
+    <br/>
+    Ak chcete naozaj zneplatniť svoj prihlasovací odkaz, napíšte do nasledujúceho poľa slovo <bold>ANO</bold>.
+    `,
   },
 };
 
