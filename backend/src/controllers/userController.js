@@ -34,7 +34,7 @@ export const createUser = async (
 };
 
 export const deleteUser = async (id) => {
-  return User.findByIdAndDelete(id).exec();
+  return await User.findByIdAndDelete(id).exec();
 };
 
 export const loginUser = async (id, secret) => {

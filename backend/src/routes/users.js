@@ -19,18 +19,22 @@ router.post("/current", (req, res, next) => {
 });
 
 router.get("/current", auth.isUser, (req, res, next) => {
-  // TODO: Get data about current user
-  next();
+  const { _id, expirationDate, visitDate } = req.auth.user;
+  return res.status(200).json({
+    id: _id,
+    expirationDate,
+    visitDate,
+  });
 });
 
-router.delete("/current", auth.isUser, (req, res, next) => {
-  // TODO: Delete the current user
-  next();
+router.delete("/current", auth.isUser, async (req, res, next) => {
+  await userController.deleteUser(req.auth.user._id);
+  return res.status(201).json();
 });
 
 router.get("/current/data", auth.isUser, (req, res, next) => {
-  // TODO: Get data of the current user
-  next();
+  const { visitDataPath } = req.auth.user;
+  return res.status(200).sendFile(visitDataPath);
 });
 
 export default router;
