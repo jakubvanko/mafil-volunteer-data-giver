@@ -18,15 +18,15 @@ export const User = mongoose.model(
       type: String,
       required: true,
     },
-    expiration_date: {
+    expirationDate: {
       type: Date,
       required: true,
     },
-    visit_data_path: {
+    visitDataPath: {
       type: String,
       required: true,
     },
-    visit_date: {
+    visitDate: {
       type: Date,
       required: true,
     },
