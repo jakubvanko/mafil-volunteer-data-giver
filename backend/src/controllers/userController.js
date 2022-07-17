@@ -1,3 +1,4 @@
+import createError from "http-errors";
 import User from "../models/user.js";
 
 const processUserData = async (visitDate, unprocessedVisitData) => {
@@ -41,5 +42,9 @@ export const loginUser = async (id, secret) => {
 };
 
 export const getUser = async (id) => {
-  return await User.findById(id).exec();
+  const user = await User.findById(id).exec();
+  if (user === null) {
+    throw createError(404);
+  }
+  return user;
 };
