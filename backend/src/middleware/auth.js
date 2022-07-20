@@ -17,8 +17,10 @@ export const isUser = async (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  this.isUser(req, res, () => {
-    // TODO: Check if admin
-    return next();
-  });
+  if (
+    req.headers.authorization?.split(" ")?.[1] !== process.env.INCOMING_API_KEY
+  ) {
+    return next(createError(401));
+  }
+  return next();
 };
