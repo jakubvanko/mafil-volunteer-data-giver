@@ -13,6 +13,10 @@ const generateExpirationDate = () => {
   throw new Error("generateExpirationDate: Not implemented");
 };
 
+const sendLoginLinkEmail = () => {
+  throw new Error("sendLoginLinkEmail: Not implemented");
+};
+
 export const createUser = async (
   email,
   secret,
@@ -31,14 +35,19 @@ export const createUser = async (
     visitDate,
   });
   await user.save();
+  sendLoginLinkEmail();
 };
 
 export const deleteUser = async (id) => {
   return await User.findByIdAndDelete(id).exec();
 };
 
-export const loginUser = async (id, secret) => {
-  throw new Error("loginUser: Not implemented");
+export const generateLoginToken = async (id) => {
+  throw new Error("generateLoginToken: Not implemented");
+};
+
+export const validateSecret = (secret, hash, salt) => {
+  throw new Error("validateSecret: Not implemented");
 };
 
 export const getUser = async (id) => {

@@ -21,9 +21,9 @@ router.delete("/:userId", auth.isAdmin, async (req, res, next) => {
   return res.status(201).json();
 });
 
-router.post("/current", (req, res, next) => {
-  // TODO: Login
-  next();
+router.post("/current", auth.isValidUserLogin, async (req, res, next) => {
+  const token = await userController.generateLoginToken(req.auth.user._id);
+  return res.status(200).json({ token });
 });
 
 router.get("/current", auth.isUser, (req, res, next) => {
