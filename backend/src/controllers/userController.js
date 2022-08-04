@@ -1,5 +1,5 @@
 import createError from "http-errors";
-import User from "../models/user.js";
+import { User } from "../models/user.js";
 
 const processUserData = async (visitDate, unprocessedVisitData) => {
   throw new Error("processUserData: Not implemented");

@@ -1,6 +1,6 @@
 import createError from "http-errors";
 import jwt from "jsonwebtoken";
-import { getUser, validateSecret } from "../controllers/userController";
+import { getUser, validateSecret } from "../controllers/userController.js";
 
 export const isValidUserLogin = async (req, res, next) => {
   try {
