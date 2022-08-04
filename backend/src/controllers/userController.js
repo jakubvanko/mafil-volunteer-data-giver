@@ -36,6 +36,7 @@ export const createUser = async (
   });
   await user.save();
   sendLoginLinkEmail();
+  return user._id;
 };
 
 export const deleteUser = async (id) => {

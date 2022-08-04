@@ -5,28 +5,32 @@ import * as userController from "../controllers/userController.js";
 
 const router = express.Router();
 
-router.post(
-  "/",
-  auth.isAdmin,
-  multer().single("file"),
-  async (req, res, next) => {
-    const { email, secret, visitDate } = req.body;
-    userController.createUser(email, secret, visitDate, req.file.path);
-    return res.status(201).json();
-  }
-);
-
-router.delete("/:userId", auth.isAdmin, async (req, res, next) => {
-  await userController.deleteUser(req.params.userId);
-  return res.status(201).json();
+// Create a new user
+router.post("/", auth.isAdmin, multer().single("file"), async (req, res) => {
+  const { email, secret, visitDate } = req.body;
+  const userId = userController.createUser(
+    email,
+    secret,
+    visitDate,
+    req.file.path
+  );
+  return res.status(200).json({ id: userId });
 });
 
-router.post("/current", auth.isValidUserLogin, async (req, res, next) => {
+// Delete a user by id
+router.delete("/:userId", auth.isAdmin, async (req, res) => {
+  await userController.deleteUser(req.params.userId);
+  return res.status(204).json();
+});
+
+// Perform user login
+router.post("/current", auth.isValidUserLogin, async (req, res) => {
   const token = await userController.generateLoginToken(req.auth.user._id);
   return res.status(200).json({ token });
 });
 
-router.get("/current", auth.isUser, (req, res, next) => {
+// Get user data of the authorized user
+router.get("/current", auth.isUser, (req, res) => {
   const { _id, expirationDate, visitDate } = req.auth.user;
   return res.status(200).json({
     id: _id,
@@ -35,12 +39,14 @@ router.get("/current", auth.isUser, (req, res, next) => {
   });
 });
 
-router.delete("/current", auth.isUser, async (req, res, next) => {
+// Delete the authorized user
+router.delete("/current", auth.isUser, async (req, res) => {
   await userController.deleteUser(req.auth.user._id);
   return res.status(204).json();
 });
 
-router.get("/current/data", auth.isUser, (req, res, next) => {
+// Get medical data of the authorized user
+router.get("/current/data", auth.isUser, (req, res) => {
   const { visitDataPath } = req.auth.user;
   return res.status(200).sendFile(visitDataPath);
 });
