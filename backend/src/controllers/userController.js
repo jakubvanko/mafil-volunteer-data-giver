@@ -1,5 +1,9 @@
+import userService from "../services/userService";
+
 const createUser = (req, res) => {
-  throw new Error("createUser: Not implemented");
+  const { email, secret, visitDate } = req.body;
+  const user = userService.createUser(email, secret, visitDate, req.file.path);
+  return res.status(201).json({ id: user._id });
 };
 
 const getUser = (req, res) => {
