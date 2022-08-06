@@ -1,43 +1,22 @@
-import createError from "http-errors";
-import jwt from "jsonwebtoken";
-import { getUser, validateSecret } from "../controllers/userController.js";
-
-export const isValidUserLogin = async (req, res, next) => {
-  try {
-    const result = jwt.verify(
-      req.headers.authorization.split(" ")[1],
-      process.env.LOGIN_TOKEN_SECRET
-    );
-    const user = await getUser(result._id);
-    if (validateSecret(req.body.secret, user.secret, user.salt)) {
-      req.auth.user = user;
-      return next();
-    }
-    return next(createError(401));
-  } catch (error) {
-    return next(createError(401));
-  }
+const isAdmin = (req, res, next) => {
+  throw new Error("isAdmin: Not implemented");
 };
 
-export const isUser = async (req, res, next) => {
-  try {
-    const result = jwt.verify(
-      req.headers.authorization.split(" ")[1],
-      process.env.TOKEN_SECRET
-    );
-    const user = await getUser(result._id);
-    req.auth.user = user;
-    return next();
-  } catch (error) {
-    return next(createError(401));
-  }
+const isUserFromParam = (param) => (req, res, next) => {
+  throw new Error("isUserFromParam: Not implemented");
 };
 
-export const isAdmin = (req, res, next) => {
-  if (
-    req.headers.authorization?.split(" ")?.[1] !== process.env.INCOMING_API_KEY
-  ) {
-    return next(createError(401));
-  }
-  return next();
+const isValidUserLogin = (req, res, next) => {
+  throw new Error("isValidUserLogin: Not implemented");
+};
+
+const oneOf = (first, second) => (req, res, next) => {
+  throw new Error("oneOf: Not implemented");
+};
+
+export default {
+  isAdmin,
+  isUserFromParam,
+  isValidUserLogin,
+  oneOf,
 };

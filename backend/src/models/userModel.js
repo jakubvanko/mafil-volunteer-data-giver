@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const User = mongoose.model(
+export default User = mongoose.model(
   "User",
   mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
