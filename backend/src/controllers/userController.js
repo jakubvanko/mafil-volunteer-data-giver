@@ -1,8 +1,13 @@
 import userService from "../services/userService";
 
-const createUser = (req, res) => {
+const createUser = async (req, res) => {
   const { email, secret, visitDate } = req.body;
-  const user = userService.createUser(email, secret, visitDate, req.file.path);
+  const user = await userService.createUser(
+    email,
+    secret,
+    visitDate,
+    req.file.path
+  );
   return res.status(201).json({ id: user._id });
 };
 

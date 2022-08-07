@@ -7,32 +7,32 @@ const router = express.Router();
 
 router.post(
   "/",
-  auth.isAdmin,
+  auth.check(auth.isAdmin),
   multer().single("file"),
   userController.createUser
 );
 
 router.get(
   "/:userId",
-  auth.oneOf(auth.isAdmin, auth.isUserFromParam("userId")),
+  auth.check(auth.isAdmin, auth.isUserFromParam("userId")),
   userController.getUser
 );
 
 router.delete(
   "/:userId",
-  auth.oneOf(auth.isAdmin, auth.isUserFromParam("userId")),
+  auth.check(auth.isAdmin, auth.isUserFromParam("userId")),
   userController.deleteUser
 );
 
 router.post(
   "/:userId/token",
-  auth.isValidUserLogin,
+  auth.check(auth.isValidUserLogin),
   userController.generateLoginToken
 );
 
 router.get(
   "/:userId/data",
-  auth.isUserFromParam("userId"),
+  auth.check(auth.isUserFromParam("userId")),
   userController.getUserData
 );
 

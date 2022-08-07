@@ -27,6 +27,11 @@ const sendLoginEmail = (user) => {
   throw new Error("sendLoginEmail: Not implemented");
 };
 
+const getUser = async (id) => {
+  throw new Error("getUser: Not implemented");
+};
+
 export default {
   createUser,
+  getUser,
 };
