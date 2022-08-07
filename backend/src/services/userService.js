@@ -1,5 +1,13 @@
 import UserModel from "../models/userModel.js";
 
+const processDicomData = (path) => {
+  throw new Error("processDicomData: Not implemented");
+};
+
+const sendLoginEmail = (user) => {
+  throw new Error("sendLoginEmail: Not implemented");
+};
+
 const createUser = async (
   email,
   secret,
@@ -19,21 +27,9 @@ const createUser = async (
   return user;
 };
 
-const processDicomData = (path) => {
-  throw new Error("processDicomData: Not implemented");
-};
+const getUser = (id) => UserModel.findById(id).exec();
 
-const sendLoginEmail = (user) => {
-  throw new Error("sendLoginEmail: Not implemented");
-};
-
-const getUser = async (id) => {
-  throw new Error("getUser: Not implemented");
-};
-
-const deleteUser = async (id) => {
-  throw new Error("deleteUser: Not implemented");
-};
+const deleteUser = (id) => UserModel.findByIdAndDelete(id).exec();
 
 export default {
   createUser,
