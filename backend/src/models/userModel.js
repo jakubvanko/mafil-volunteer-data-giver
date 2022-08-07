@@ -46,4 +46,4 @@ userSchema.methods.generateUserToken = function () {
   });
 };
 
-export default UserModel = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);
