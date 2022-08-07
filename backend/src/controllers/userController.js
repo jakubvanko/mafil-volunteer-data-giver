@@ -33,7 +33,7 @@ const generateLoginToken = (req, res) => {
 };
 
 const getUserData = (req, res) => {
-  throw new Error("getUserData: Not implemented");
+  return res.status(200).download(req.auth.user.dicomDataPath);
 };
 
 export default {
