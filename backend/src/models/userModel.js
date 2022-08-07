@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jsonwebtoken from "jsonwebtoken";
 
 const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -35,8 +36,14 @@ userSchema.pre("save", async function () {
   );
 });
 
-userSchema.methods.validateSecret = async function validateSecret(data) {
+userSchema.methods.validateSecret = async function (data) {
   return bcrypt.compare(data, process.env.HASH_PEPPER + this.secret);
+};
+
+userSchema.methods.generateUserToken = function () {
+  return jsonwebtoken.sign({ _id: this._id }, process.env.TOKEN_SECRET, {
+    expiresIn: process.env.LOGIN_TOKEN_EXPIRATION,
+  });
 };
 
 export default UserModel = mongoose.model("User", userSchema);

@@ -31,7 +31,12 @@ const getUser = async (id) => {
   throw new Error("getUser: Not implemented");
 };
 
+const deleteUser = async (id) => {
+  throw new Error("deleteUser: Not implemented");
+};
+
 export default {
   createUser,
   getUser,
+  deleteUser,
 };

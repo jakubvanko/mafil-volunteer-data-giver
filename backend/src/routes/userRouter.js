@@ -15,13 +15,13 @@ router.post(
 router.get(
   "/:userId",
   auth.check(auth.isAdmin, auth.isUserFromParam("userId")),
-  userController.getUser
+  userController.getUserFromParam("userId")
 );
 
 router.delete(
   "/:userId",
   auth.check(auth.isAdmin, auth.isUserFromParam("userId")),
-  userController.deleteUser
+  userController.deleteUserFromParam("userId")
 );
 
 router.post(
