@@ -11,14 +11,13 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMail = async (to, subject, html) => {
-  if (
-    (await transporter.sendMail({
-      from: process.env.MAIL_SENDER,
-      to,
-      subject,
-      html,
-    }).messageId) === undefined
-  ) {
+  const mailResult = await transporter.sendMail({
+    from: process.env.MAIL_SENDER,
+    to,
+    subject,
+    html,
+  });
+  if (mailResult.messageId === undefined) {
     throw new Error("Mail error");
   }
 };

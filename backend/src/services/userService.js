@@ -21,7 +21,6 @@ const createUser = async (
 ) => {
   const dicomDataPath = processDicomData(unprocesedDicomFilePath);
   const user = new UserModel({
-    _id: new mongoose.Types.ObjectId(),
     email,
     secret,
     dicomDataPath,

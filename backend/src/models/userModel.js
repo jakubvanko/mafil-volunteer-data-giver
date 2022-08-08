@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import jsonwebtoken from "jsonwebtoken";
 import ms from "ms";
+import bcrypt from "bcryptjs";
 
 const userSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
   email: {
     type: String,
     required: true,
@@ -33,7 +33,7 @@ userSchema.pre("save", async function () {
   if (!this.isModified("secret")) return;
   this.secret = await bcrypt.hash(
     process.env.HASH_PEPPER + this.secret,
-    await bcrypt.genSalt(process.env.SALT_WORK_FACTOR)
+    await bcrypt.genSalt(parseInt(process.env.SALT_WORK_FACTOR))
   );
 });
 
