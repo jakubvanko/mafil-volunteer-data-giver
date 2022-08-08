@@ -1,11 +1,16 @@
 import UserModel from "../models/userModel.js";
+import mailService from "./mailService.js";
 
 const processDicomData = (path) => {
   throw new Error("processDicomData: Not implemented");
 };
 
 const sendLoginEmail = (user) => {
-  throw new Error("sendLoginEmail: Not implemented");
+  return mailService.sendMail(
+    user.email,
+    "[MAFIL-Dobrovolnik] Váš účet bol vytvorený",
+    `<p>${user.generateLoginToken()}</p>`
+  );
 };
 
 const createUser = async (

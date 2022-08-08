@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import jsonwebtoken from "jsonwebtoken";
+import ms from "ms";
 
 const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -16,7 +17,7 @@ const userSchema = mongoose.Schema({
   expirationDate: {
     type: Date,
     required: true,
-    default: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // days * hrs * mins * secs * ms
+    default: new Date(Date.now() + ms(process.env.LOGIN_TOKEN_EXPIRATION)),
   },
   dicomDataPath: {
     type: String,
@@ -42,6 +43,12 @@ userSchema.methods.validateSecret = async function (data) {
 
 userSchema.methods.generateUserToken = function () {
   return jsonwebtoken.sign({ _id: this._id }, process.env.TOKEN_SECRET, {
+    expiresIn: process.env.USER_TOKEN_EXPIRATION,
+  });
+};
+
+userSchema.methods.generateLoginToken = function () {
+  return jsonwebtoken.sign({ _id: this._id }, process.env.LOGIN_TOKEN_SECRET, {
     expiresIn: process.env.LOGIN_TOKEN_EXPIRATION,
   });
 };
