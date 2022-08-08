@@ -7,8 +7,8 @@ import cors from "cors";
 
 import "./config/env.js";
 import "./config/database.js";
+import handlers from "./middleware/handlers.js";
 import userRouter from "./routes/userRouter.js";
-import defaultRouter from "./routes/defaultRouter.js";
 
 const app = express();
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
@@ -16,8 +16,8 @@ app.use(cors()); // Set origin for better security
 app.use(helmet());
 app.use(express.json()); // If form objects needed => app.use(express.urlencoded({ extended: false }));
 
-//Routes
 app.use("/api/users", userRouter);
-app.use(defaultRouter);
+app.use(handlers.defaultRoute);
+app.use(handlers.errorHandler);
 
 http.createServer(app).listen(process.env.PORT || "3000");
