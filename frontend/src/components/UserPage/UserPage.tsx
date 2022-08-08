@@ -10,12 +10,13 @@ import {
 import { Trans, useTranslation } from "react-i18next";
 import { MainCard } from "../MainCard/MainCard";
 import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export const UserPage = () => {
   const { t } = useTranslation();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <MainPageContainer>
@@ -33,7 +34,12 @@ export const UserPage = () => {
             components={{
               bold: <b />,
               link1: <Link href="" />,
-              link2: <Link component={RouterLink} to="../logout" />,
+              link2: (
+                <Link
+                  onClick={() => setModalOpen(true)}
+                  sx={{ cursor: "pointer" }}
+                />
+              ),
             }}
           />
         </Typography>
@@ -59,9 +65,9 @@ export const UserPage = () => {
                 whiteSpace: "nowrap",
                 minWidth: "19em",
               }}
-              onClick={() => setModalOpen(true)}
+              onClick={() => navigate("../logout", { replace: true })}
             >
-              {t("user.buttonDisableUserText")}
+              {t("user.buttonLogout")}
             </Button>
           </Box>
         </Stack>
@@ -73,6 +79,7 @@ export const UserPage = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
+            outline: "none",
           }}
         >
           <MainCard headingText={t("invalidate.headingText")}>

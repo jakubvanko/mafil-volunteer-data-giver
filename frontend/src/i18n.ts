@@ -16,6 +16,7 @@ const translationEn = {
   user: {
     buttonDownloadDataText: "Download data",
     buttonDisableUserText: "Invalidate my login link",
+    buttonLogout: "Log out",
     headingText: "Download your data",
     loginLinkAvailability: "Login link valid until",
     downloadInfoText: `Now you can download your data by clicking the green button. <br/>
@@ -25,8 +26,7 @@ const translationEn = {
         • your medical data <br/>
         To view detailed instructions on how to view your data <link1>click HERE</link1>. <br/>
         Please note that the archive contains <bold>sensitive medical data</bold>. <br/>
-        If you want to invalidate your login link, you can do so by clicking the red button. <br/>
-        <bold>To log out, simply close this website or <link2>click HERE</link2>.</bold>
+        If you want to invalidate your login link and disable this account <link2>click HERE</link2>.
     `,
   },
   error: {
@@ -69,6 +69,7 @@ const translationCz = {
   user: {
     buttonDownloadDataText: "Stáhnout údaje",
     buttonDisableUserText: "Zneplatnit přihlašovací odkaz",
+    buttonLogout: "Odhlásit se",
     headingText: "Stáhnout údaje",
     loginLinkAvailability: "Přihlašovací odkaz platný do",
     downloadInfoText: `Nyní si můžete stáhnout své údaje klepnutím na zelené tlačítko. <br/>
@@ -78,8 +79,7 @@ const translationCz = {
     • vaše medicínská data <br/>
     Pro zobrazení podrobného návodu jak si zobrazit svá data <link1>klikněte ZDE</link1>. <br/>
     Berte prosím na vědomí, že se jedná o <bold>citlivé medicínské údaje</bold>. <br/>
-    V případě, že chcete zneplatit svůj přihlašovací odkaz, můžete tak učinit kliknutím na červené tlačítko. <br/>
-    <bold>Chcete-li se odhlásit, jednoduše zavřete tuto webstránku nebo <link2>klikněte ZDE</link2>.</bold>
+    Pro zneplatnění přihlašovacího odkazu a tedy i tohoto účtu <link2>klikněte ZDE</link2>.
     `,
   },
   error: {
@@ -122,6 +122,7 @@ const translationSk = {
   user: {
     buttonDownloadDataText: "Stiahnuť údaje",
     buttonDisableUserText: "Zneplatniť prihlasovací odkaz",
+    buttonLogout: "Odhlásiť sa",
     headingText: "Stiahnuť údaje",
     loginLinkAvailability: "Prihlasovací odkaz platný do",
     downloadInfoText: `Teraz si môžete stiahnuť svoje údaje kliknutím na zelené tlačidlo. <br/>
@@ -131,8 +132,7 @@ const translationSk = {
     • vaše medicínske dáta <br/>
     Pre zobrazenie podrobného návodu ako si zobraziť svoje dáta <link1>kliknite TU</link1>. <br/>
     Berte prosím na vedomie, že sa jedná o <bold>citlivé medicínske údaje</bold>. <br/>
-    V prípade ak chcete zneplatiť svoj prihlasovací odkaz, môžete tak urobiť kliknutím na červené tlačidlo. <br/>
-    <bold>Ak sa chcete odhlásiť, jednoducho zatvorte túto webstránku alebo <link2>kliknite TU</link2>.</bold>
+    Pre zneplatnenie prihlasovacieho odkazu a teda aj tohto účtu kliknite <link2>kliknite TU</link2>.
     `,
   },
   error: {

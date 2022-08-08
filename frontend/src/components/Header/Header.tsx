@@ -5,7 +5,6 @@ import {
   Toolbar,
   Link,
   Stack,
-  Box,
 } from "@mui/material";
 import { SK, CZ, GB, FlagComponent } from "country-flag-icons/react/3x2";
 import { useTranslation } from "react-i18next";
