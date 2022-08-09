@@ -1,5 +1,10 @@
+import createError from "http-errors";
+
 const errorHandler = (error, req, res, next) => {
-  res.status(error.status || 500);
+  if (error.status === undefined) {
+    error = createError(500);
+  }
+  res.status(error.status);
   res.json({
     error: {
       message: error.message,

@@ -1,4 +1,5 @@
 import createError from "http-errors";
+import jsonwebtoken from "jsonwebtoken";
 import userService from "../services/userService.js";
 
 const extractBearerToken = (req) => req.headers.authorization?.split(" ")?.[1];
@@ -21,12 +22,12 @@ const isUserFromParam = (param) => async (req) => {
 };
 
 const isValidUserLogin = async (req) => {
-  const tokenBody = jwt.verify(
+  const tokenBody = jsonwebtoken.verify(
     extractBearerToken(req),
     process.env.LOGIN_TOKEN_SECRET
   );
-  req.auth.user = await userService.getUser(tokenBody._id);
-  return req.auth.user.validateSecret(req.body.secret);
+  req.auth = { user: await userService.getUser(tokenBody._id) };
+  return await req.auth.user.validateSecret(req.body.secret);
 };
 
 /**

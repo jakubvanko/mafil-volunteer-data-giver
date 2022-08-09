@@ -38,7 +38,7 @@ userSchema.pre("save", async function () {
 });
 
 userSchema.methods.validateSecret = async function (data) {
-  return bcrypt.compare(data, process.env.HASH_PEPPER + this.secret);
+  return bcrypt.compare(process.env.HASH_PEPPER + data, this.secret);
 };
 
 userSchema.methods.generateUserToken = function () {
