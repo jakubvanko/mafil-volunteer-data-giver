@@ -8,17 +8,17 @@ const isAdmin = (req) =>
   extractBearerToken(req) === process.env.INCOMING_API_KEY;
 
 const isUser = async (req) => {
-  const tokenBody = jwt.verify(
+  const tokenBody = jsonwebtoken.verify(
     extractBearerToken(req),
     process.env.TOKEN_SECRET
   );
-  req.auth.user = await userService.getUser(tokenBody._id);
+  req.auth = { user: await userService.getUser(tokenBody._id) };
   return true;
 };
 
 const isUserFromParam = (param) => async (req) => {
   await isUser(req);
-  return req.params[param] === req.auth.user._id;
+  return req.params[param] === req.auth.user._id.toString();
 };
 
 const isValidUserLogin = async (req) => {

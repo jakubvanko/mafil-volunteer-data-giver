@@ -29,7 +29,9 @@ const deleteUserFromParam = (param) => async (req, res) => {
 };
 
 const generateUserToken = (req, res) => {
-  return res.status(200).json({ token: req.auth.user.generateUserToken() });
+  return res
+    .status(200)
+    .json({ id: req.auth.user._id, token: req.auth.user.generateUserToken() });
 };
 
 const getUserData = (req, res) => {
