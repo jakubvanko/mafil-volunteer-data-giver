@@ -28,8 +28,8 @@ const deleteUserFromParam = (param) => async (req, res) => {
   return res.status(204).json();
 };
 
-const generateLoginToken = (req, res) => {
-  return res.status(200).json({ token: req.auth.user.generateLoginToken() });
+const generateUserToken = (req, res) => {
+  return res.status(200).json({ token: req.auth.user.generateUserToken() });
 };
 
 const getUserData = (req, res) => {
@@ -40,6 +40,6 @@ export default {
   createUser,
   getUserFromParam,
   deleteUserFromParam,
-  generateLoginToken,
+  generateUserToken,
   getUserData,
 };

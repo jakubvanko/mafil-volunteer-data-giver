@@ -27,7 +27,7 @@ router.delete(
 router.post(
   "/tokens",
   auth.check(auth.isValidUserLogin),
-  userController.generateLoginToken
+  userController.generateUserToken
 );
 
 router.get(
