@@ -4,29 +4,21 @@ import userService from "../services/userService.js";
 
 const extractBearerToken = (req) => req.headers.authorization?.split(" ")?.[1];
 
+const getUserFromToken = async (req, tokenSecret) => {
+  const tokenBody = jsonwebtoken.verify(extractBearerToken(req), tokenSecret);
+  req.auth = { user: await userService.getUser(tokenBody._id) };
+};
+
 const isAdmin = (req) =>
   extractBearerToken(req) === process.env.INCOMING_API_KEY;
 
-const isUser = async (req) => {
-  const tokenBody = jsonwebtoken.verify(
-    extractBearerToken(req),
-    process.env.TOKEN_SECRET
-  );
-  req.auth = { user: await userService.getUser(tokenBody._id) };
-  return true;
-};
-
 const isUserFromParam = (param) => async (req) => {
-  await isUser(req);
+  await getUserFromToken(req, process.env.TOKEN_SECRET);
   return req.params[param] === req.auth.user._id.toString();
 };
 
 const isValidUserLogin = async (req) => {
-  const tokenBody = jsonwebtoken.verify(
-    extractBearerToken(req),
-    process.env.LOGIN_TOKEN_SECRET
-  );
-  req.auth = { user: await userService.getUser(tokenBody._id) };
+  await getUserFromToken(req, process.env.LOGIN_TOKEN_SECRET);
   return await req.auth.user.validateSecret(req.body.secret);
 };
 
@@ -50,7 +42,6 @@ const check =
 export default {
   check,
   isAdmin,
-  isUser,
   isUserFromParam,
   isValidUserLogin,
 };
