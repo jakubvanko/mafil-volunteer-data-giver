@@ -1,6 +1,7 @@
 import createError from "http-errors";
 
 const errorHandler = (error, req, res, next) => {
+  console.log(error);
   if (error.status === undefined) {
     error = createError(500);
   }

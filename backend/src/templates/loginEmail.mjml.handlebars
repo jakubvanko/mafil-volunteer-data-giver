@@ -1,0 +1,60 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all
+        font-family="'Open Sans',sans-serif"
+        font-size="16px"
+        line-height="1.7"
+      ></mj-all>
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#f8f8f8">
+    <mj-section background-color="#1976d2">
+      <mj-column>
+        <mj-image
+          width="300px"
+          src="https://mafil.ceitec.cz/files/287/thumb/157-logo-mafil-transp2-0x0.png"
+        ></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="white">
+      <mj-column>
+        <mj-text font-size="28px" font-weight="bold">
+          Dobrý den
+          {{name}}.
+        </mj-text>
+        <mj-text>
+          Děkujeme za Vaši účast ve studii laboratoře MAFIL.
+          <br />
+          Své údaje si můžete stáhnout pomocí následujícího odkazu:
+        </mj-text>
+        <mj-button
+          href="{{loginLink}}"
+          background-color="#1976d2"
+          border-radius="4px"
+          font-weight="bold"
+        >Klikněte zde pro přístup ke svým údajům</mj-button>
+        <mj-text>
+          Nebo navštivte tento odkaz:
+          <a style="color: #1976d2">{{loginLink}}</a>
+        </mj-text>
+        <mj-text>
+          Jedná se o
+          <b>citlivé medicínské údaje</b>, proto tento email nesdílejte.
+          <br />
+          Platnost odkazu vyprší o 90 dní. Údaje jsou z návštěvy dne
+          <b>{{visitDate}}</b>.
+        </mj-text>
+        <mj-text><i>– Tým MAFIL</i></mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text align="center" font-size="14px" color="#888">
+          Laboratoř
+          <b>MAFIL</b>, Kamenice 753/5, 625 00 Brno, budova E35.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

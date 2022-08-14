@@ -4,6 +4,10 @@ import ms from "ms";
 import bcrypt from "bcryptjs";
 
 const userSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,

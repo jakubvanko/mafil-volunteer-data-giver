@@ -2,18 +2,16 @@ import UserModel from "../models/userModel.js";
 import mailService from "./mailService.js";
 
 const processDicomData = (path) => {
+  return "src\\app.js";
   throw new Error("processDicomData: Not implemented");
 };
 
-const sendLoginEmail = (user) => {
-  return mailService.sendMail(
-    user.email,
-    "[MAFIL-Dobrovolnik] Váš účet bol vytvorený",
-    `<p>${user.generateLoginToken()}</p>`
-  );
+const generateLoginLink = (user) => {
+  return user.generateLoginToken();
 };
 
 const createUser = async (
+  name,
   email,
   secret,
   visitDate,
@@ -21,13 +19,19 @@ const createUser = async (
 ) => {
   const dicomDataPath = processDicomData(unprocesedDicomFilePath);
   const user = new UserModel({
+    name,
     email,
     secret,
     dicomDataPath,
     visitDate,
   });
   await user.save();
-  sendLoginEmail(user);
+  mailService.sendLoginEmail(
+    user.email,
+    user.name,
+    user.visitDate,
+    generateLoginLink(user)
+  );
   return user;
 };
 

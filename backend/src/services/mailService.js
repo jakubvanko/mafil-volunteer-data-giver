@@ -1,4 +1,29 @@
 import nodemailer from "nodemailer";
+import fs from "fs";
+import url from "url";
+import path from "path";
+import handlebars from "handlebars";
+import mjml from "mjml";
+
+const getTemplatePath = (templateName) =>
+  path.join(
+    path.dirname(url.fileURLToPath(import.meta.url)),
+    `../templates/${templateName}`
+  );
+
+const loadTemplate = async (templateName) => {
+  let fileHandle;
+  try {
+    fileHandle = await fs.promises.open(getTemplatePath(templateName), "r");
+    return (await fileHandle.readFile()).toString();
+  } finally {
+    await fileHandle?.close();
+  }
+};
+
+const LOGIN_EMAIL_TEMPLATE = handlebars.compile(
+  await loadTemplate("loginEmail.mjml.handlebars")
+);
 
 const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
@@ -22,6 +47,19 @@ const sendMail = async (to, subject, html) => {
   }
 };
 
+const sendLoginEmail = (emailAddress, name, visitDate, loginLink) =>
+  sendMail(
+    emailAddress,
+    "Váš účet bol vytvorený",
+    mjml(
+      LOGIN_EMAIL_TEMPLATE({
+        name,
+        loginLink,
+        visitDate: visitDate.toLocaleDateString("cs-CZ").replaceAll(" ", ""),
+      })
+    ).html
+  );
+
 export default {
-  sendMail,
+  sendLoginEmail,
 };

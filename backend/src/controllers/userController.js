@@ -1,8 +1,9 @@
 import userService from "../services/userService.js";
 
 const createUser = async (req, res) => {
-  const { email, secret, visitDate } = req.body;
+  const { name, email, secret, visitDate } = req.body;
   const user = await userService.createUser(
+    name,
     email,
     secret,
     visitDate,
