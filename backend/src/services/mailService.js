@@ -50,7 +50,7 @@ const sendMail = async (to, subject, html) => {
 const sendLoginEmail = (emailAddress, name, visitDate, loginLink) =>
   sendMail(
     emailAddress,
-    "Váš účet bol vytvorený",
+    "Váš účet byl vytvořen",
     mjml(
       LOGIN_EMAIL_TEMPLATE({
         name,
