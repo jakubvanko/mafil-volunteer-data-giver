@@ -8,6 +8,7 @@ import "express-async-errors";
 
 import "./config/env.js";
 import "./config/database.js";
+import "./config/timers.js";
 import handlers from "./middleware/handlers.js";
 import userRouter from "./routes/userRouter.js";
 

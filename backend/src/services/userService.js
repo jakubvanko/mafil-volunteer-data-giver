@@ -39,8 +39,17 @@ const getUser = (id) => UserModel.findById(id).exec();
 
 const deleteUser = (id) => UserModel.findByIdAndDelete(id).exec();
 
+const deleteExpiredUsers = async () => {
+  const deleted = await UserModel.deleteMany()
+    .where("expirationDate")
+    .lte(Date.now())
+    .exec();
+  console.log(`Deleted ${deleted.deletedCount} expired users`);
+};
+
 export default {
   createUser,
   getUser,
   deleteUser,
+  deleteExpiredUsers,
 };
