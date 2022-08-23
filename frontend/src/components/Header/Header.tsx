@@ -46,12 +46,24 @@ const LanguageBreadcrumbButton = ({
 export const Header = () => {
   return (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar
+        sx={{
+          paddingTop: {
+            xs: 2,
+            sm: 0,
+          },
+          paddingBottom: {
+            xs: 2,
+            sm: 0,
+          },
+        }}
+      >
         <Stack
-          direction="row"
+          direction={{ xs: "column", sm: "row" }}
+          spacing={{ xs: 2, sm: 0 }}
           alignItems="center"
           justifyContent="space-between"
-          width={"100%"}
+          width="100%"
         >
           <Link
             sx={{ lineHeight: "0px" }}
