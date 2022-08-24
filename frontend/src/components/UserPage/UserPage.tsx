@@ -47,7 +47,7 @@ export const UserPage = () => {
                 href="path_to_file"
                 download="User_anatomical_14_1_2022"
               >
-                {t("user.buttonDownloadDataText")}
+                {t("user.buttonDownloadDataText")} (X.XX GB)
               </Button>
             ),
             size: 8,

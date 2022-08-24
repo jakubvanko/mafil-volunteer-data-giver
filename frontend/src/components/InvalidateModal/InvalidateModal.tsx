@@ -1,4 +1,4 @@
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { MainCard } from "../MainCard/MainCard";
 import { Link as RouterLink } from "react-router-dom";
@@ -19,14 +19,14 @@ export const InvalidateModal = ({
 
   return (
     <Modal open={isModalOpen} onClose={() => setModalOpen(false)}>
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          outline: "none",
-        }}
+      <Grid
+        minHeight="100vh"
+        container
+        justifyContent="center"
+        alignItems={{ xs: "stretch", sm: "center" }}
+        onClick={(event) =>
+          event.target === event.currentTarget && setModalOpen(false)
+        }
       >
         <MainCard headingText={t("invalidate.headingText")}>
           <Typography variant="body1" sx={{ lineHeight: "2em" }}>
@@ -78,7 +78,7 @@ export const InvalidateModal = ({
             }}
           />
         </MainCard>
-      </Box>
+      </Grid>
     </Modal>
   );
 };
