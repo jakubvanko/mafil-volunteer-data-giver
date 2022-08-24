@@ -19,14 +19,14 @@ const translationEn = {
     buttonLogout: "Log out",
     headingText: "Download your data",
     loginLinkAvailability: "Login link valid until",
-    downloadInfoText: `Now you can download your data by clicking the green button. <br/>
-        After pressing the button, a .zip file with your data will be downloaded to your computer. <br/>
-        This .zip archive contains: <br/>
-        • a browser with which you can view your medical data <br/>
-        • your medical data <br/>
-        To view detailed instructions on how to view your data <link1>click HERE</link1>. <br/>
-        Please note that the archive contains <bold>sensitive medical data</bold>. <br/>
-        If you want to invalidate your login link and disable this account <link2>click HERE</link2>.
+    downloadInfoText: `You can now download your data taken on {{visitDate}}. <br/>
+    After pressing the button, a .zip file with your data will be downloaded to your computer. <br/>
+    This .zip archive contains: <br/>
+    • a browser with which you can view your medical data <br/>
+    • your medical data <br/>
+    The data will be imported to the image browser automatically after starting. <br/>
+    Please note that this is <bold>sensitive medical data</bold>. <br/>
+    To invalidate the login link and thus this account, <linkDisable>click HERE</linkDisable>.
     `,
   },
   error: {
@@ -72,14 +72,14 @@ const translationCz = {
     buttonLogout: "Odhlásit se",
     headingText: "Stáhnout údaje",
     loginLinkAvailability: "Přihlašovací odkaz platný do",
-    downloadInfoText: `Nyní si můžete stáhnout své údaje klepnutím na zelené tlačítko. <br/>
+    downloadInfoText: `Nyní si můžete stáhnout své údaje z vaší návštěvy dne {{visitDate}}. <br/>
     Po stisku tlačítka se vám do počítače stáhne soubor .zip s vašimi daty. <br/>
     Tento zip archiv obsahuje: <br/>
     • prohlížeč, pomocí kterého si můžete prohlédnout vaše medicínská data <br/>
     • vaše medicínská data <br/>
-    Pro zobrazení podrobného návodu jak si zobrazit svá data <link1>klikněte ZDE</link1>. <br/>
+    Data se vám do prohlížeče nahrají automaticky při jeho spuštění. <br/>
     Berte prosím na vědomí, že se jedná o <bold>citlivé medicínské údaje</bold>. <br/>
-    Pro zneplatnění přihlašovacího odkazu a tedy i tohoto účtu <link2>klikněte ZDE</link2>.
+    Pro zneplatnění přihlašovacího odkazu a tedy i tohoto účtu <linkDisable>klikněte ZDE</linkDisable>.
     `,
   },
   error: {
@@ -125,14 +125,14 @@ const translationSk = {
     buttonLogout: "Odhlásiť sa",
     headingText: "Stiahnuť údaje",
     loginLinkAvailability: "Prihlasovací odkaz platný do",
-    downloadInfoText: `Teraz si môžete stiahnuť svoje údaje kliknutím na zelené tlačidlo. <br/>
+    downloadInfoText: `Teraz si môžete stiahnuť svoje údaje z vašej návštevy dňa {{visitDate}}. <br/>
     Po stlačení tlačidla sa vám do počítača stiahne súbor .zip s vašimi dátami. <br/>
     Tento .zip archív obsahuje: <br/>
     • prehliadač, pomocou ktorého si môžete prezrieť vaše medicínske dáta <br/>
     • vaše medicínske dáta <br/>
-    Pre zobrazenie podrobného návodu ako si zobraziť svoje dáta <link1>kliknite TU</link1>. <br/>
+    Dáta sa vám do prehliadača nahrajú automaticky pri jeho spustení. <br/>
     Berte prosím na vedomie, že sa jedná o <bold>citlivé medicínske údaje</bold>. <br/>
-    Pre zneplatnenie prihlasovacieho odkazu a teda aj tohto účtu kliknite <link2>kliknite TU</link2>.
+    Pre zneplatnenie prihlasovacieho odkazu a teda aj tohto účtu <linkDisable>kliknite TU</linkDisable>.
     `,
   },
   error: {

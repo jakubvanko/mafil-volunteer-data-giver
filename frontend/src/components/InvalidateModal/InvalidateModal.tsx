@@ -1,14 +1,8 @@
-import {
-  Box,
-  Button,
-  Modal,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { MainCard } from "../MainCard/MainCard";
 import { Link as RouterLink } from "react-router-dom";
+import { ButtonPair } from "../ButtonPair/ButtonPair";
 
 interface InvalidateModalProps {
   isModalOpen: boolean;
@@ -47,34 +41,35 @@ export const InvalidateModal = ({
             variant="filled"
             fullWidth
           />
-          <Stack direction="row" spacing={3}>
-            <Box width={"100%"}>
-              <Button
-                component={RouterLink}
-                to="../deleted"
-                fullWidth
-                variant="outlined"
-                color="error"
-              >
-                {t("user.buttonDisableUserText")}
-              </Button>
-            </Box>
-            <Box>
-              <Button
-                fullWidth
-                variant="contained"
-                color="success"
-                sx={{
-                  width: "fit-content",
-                  whiteSpace: "nowrap",
-                  minWidth: "19em",
-                }}
-                onClick={() => setModalOpen(false)}
-              >
-                {t("invalidate.buttonGoBack")}
-              </Button>
-            </Box>
-          </Stack>
+          <ButtonPair
+            first={{
+              component: (
+                <Button
+                  component={RouterLink}
+                  to="../deleted"
+                  fullWidth
+                  variant="outlined"
+                  color="error"
+                >
+                  {t("user.buttonDisableUserText")}
+                </Button>
+              ),
+              size: 6,
+            }}
+            second={{
+              component: (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="success"
+                  onClick={() => setModalOpen(false)}
+                >
+                  {t("invalidate.buttonGoBack")}
+                </Button>
+              ),
+              size: 6,
+            }}
+          />
         </MainCard>
       </Box>
     </Modal>
