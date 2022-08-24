@@ -12,13 +12,20 @@ export const MainCard = ({
   children,
 }: PropsWithChildren<MainCardProps>) => {
   return (
-    <Paper elevation={5}>
+    <Paper
+      elevation={5}
+      sx={{
+        width: { xs: "100%", sm: "initial" },
+        minHeight: { xs: "100%", sm: "initial" },
+      }}
+    >
       <Stack
-        padding={"30px 40px;"}
+        padding={{ xs: "30px 20px", sm: "30px 40px" }}
         justifyContent="space-between"
         alignItems="center"
-        direction="row"
-        width={"100%"}
+        spacing={{ xs: 2, sm: 0 }}
+        direction={{ xs: "column", sm: "row" }}
+        width="100%"
       >
         <Typography variant="h5">
           <b>{headingText}</b>
@@ -26,7 +33,10 @@ export const MainCard = ({
         {secondaryHeadingElement && secondaryHeadingElement}
       </Stack>
       <Divider />
-      <Stack spacing={3} padding={"25px 40px 40px 40px"}>
+      <Stack
+        spacing={3}
+        padding={{ xs: "25px 20px 40px 20px", sm: "25px 40px 40px 40px" }}
+      >
         {children}
       </Stack>
     </Paper>

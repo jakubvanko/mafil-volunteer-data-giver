@@ -4,11 +4,11 @@ import { PropsWithChildren } from "react";
 export const MainPageContainer = ({ children }: PropsWithChildren) => {
   return (
     <Grid
-      minHeight={"calc(100vh - 64px)"}
+      minHeight={{ xs: "calc(100vh - 112px)", sm: "calc(100vh - 64px)" }}
       container
       justifyContent="center"
-      alignItems="center"
-      paddingBottom={"calc(64px)"}
+      alignItems={{ xs: "stretch", sm: "center" }}
+      paddingBottom={{ xs: 0, sm: "64px" }}
     >
       {children}
     </Grid>

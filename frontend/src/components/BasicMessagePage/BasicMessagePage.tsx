@@ -23,6 +23,7 @@ export const BasicMessagePage = ({
           variant="contained"
           href="https://mafil.ceitec.cz/"
           rel="noopener noreferrer"
+          sx={{ textAlign: "center" }}
         >
           {t("common.buttonOutLinkText")}
         </Button>
