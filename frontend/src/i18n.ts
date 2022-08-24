@@ -25,8 +25,8 @@ const translationEn = {
     • a browser with which you can view your medical data <br/>
     • your medical data <br/>
     The data will be imported to the image browser automatically after starting. <br/>
-    Please note that this is <bold>sensitive medical data</bold>. <br/>
-    To invalidate the login link and thus this account, <linkDisable>click HERE</linkDisable>.
+    Please note that the archive contains <bold>sensitive medical data</bold>. <br/>
+    If you want to invalidate your login link and disable this account <linkDisable>click HERE</linkDisable>.
     `,
   },
   error: {
@@ -51,7 +51,7 @@ const translationEn = {
     Invalidation of the login link <bold>CANNOT BE REVERSED</bold>. <br/>
     After invalidation, you will be immediately logged out of all devices. <br/>
     <br/>
-    If you really want to invalidate your login link, type the word <bold>ANO</bold> in the following field.
+    If you really want to invalidate your login link, type the word <bold>YES</bold> in the following field.
     `,
   },
 };

@@ -3,6 +3,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { MainCard } from "../MainCard/MainCard";
 import { Link as RouterLink } from "react-router-dom";
 import { ButtonPair } from "../ButtonPair/ButtonPair";
+import { useState } from "react";
 
 interface InvalidateModalProps {
   isModalOpen: boolean;
@@ -14,6 +15,7 @@ export const InvalidateModal = ({
   setModalOpen,
 }: InvalidateModalProps) => {
   const { t } = useTranslation();
+  const [confirmationText, setConfirmationText] = useState<string>("");
 
   return (
     <Modal open={isModalOpen} onClose={() => setModalOpen(false)}>
@@ -40,6 +42,8 @@ export const InvalidateModal = ({
             label={t("invalidate.textFieldLabel")}
             variant="filled"
             fullWidth
+            value={confirmationText}
+            onChange={(event) => setConfirmationText(event.target.value)}
           />
           <ButtonPair
             first={{
@@ -50,6 +54,9 @@ export const InvalidateModal = ({
                   fullWidth
                   variant="outlined"
                   color="error"
+                  disabled={
+                    !["ano", "yes"].includes(confirmationText.toLowerCase())
+                  }
                 >
                   {t("user.buttonDisableUserText")}
                 </Button>
