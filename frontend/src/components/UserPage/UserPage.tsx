@@ -1,4 +1,4 @@
-import { Button, Link, Stack, Typography, Box, Modal } from "@mui/material";
+import { Button, Link, Typography, Grid } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { MainCard } from "../MainCard/MainCard";
 import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
@@ -36,8 +36,14 @@ export const UserPage = () => {
             }}
           />
         </Typography>
-        <Stack direction="row" spacing={3}>
-          <Box width={"100%"}>
+        <Grid container justifyContent="space-between" rowSpacing={0}>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            paddingRight={{ xs: 0, sm: 1 }}
+            paddingBottom={{ xs: 1, sm: 0 }}
+          >
             <Button
               fullWidth
               variant="contained"
@@ -47,23 +53,24 @@ export const UserPage = () => {
             >
               {t("user.buttonDownloadDataText")}
             </Button>
-          </Box>
-          <Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={4}
+            paddingLeft={{ xs: 0, sm: 1 }}
+            paddingTop={{ xs: 1, sm: 0 }}
+          >
             <Button
               fullWidth
               variant="outlined"
               color="error"
-              sx={{
-                width: "fit-content",
-                whiteSpace: "nowrap",
-                minWidth: "19em",
-              }}
               onClick={() => navigate("../logout", { replace: true })}
             >
               {t("user.buttonLogout")}
             </Button>
-          </Box>
-        </Stack>
+          </Grid>
+        </Grid>
       </MainCard>
       <InvalidateModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
     </MainPageContainer>

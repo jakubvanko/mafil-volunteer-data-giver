@@ -22,7 +22,7 @@ export const MainCard = ({
       <Stack
         padding={{ xs: "30px 20px", sm: "30px 40px" }}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={{ xs: "start", sm: "center" }}
         spacing={{ xs: 2, sm: 0 }}
         direction={{ xs: "column", sm: "row" }}
         width="100%"
