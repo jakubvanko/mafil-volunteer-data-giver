@@ -10,20 +10,15 @@ const generateLoginLink = (user) => {
   return user.generateLoginToken();
 };
 
-const createUser = async (
-  name,
-  email,
-  secret,
-  visitDate,
-  unprocesedDicomFilePath
-) => {
-  const dicomDataPath = processDicomData(unprocesedDicomFilePath);
+const createUser = async (name, email, secret, visitDate, studyInstanceUID) => {
+  const dicomDataPath = processDicomData(studyInstanceUID);
   const user = new UserModel({
     name,
     email,
     secret,
     dicomDataPath,
     visitDate,
+    studyInstanceUID,
   });
   await user.save();
   mailService.sendLoginEmail(
@@ -47,9 +42,14 @@ const deleteExpiredUsers = async () => {
   console.log(`Deleted ${deleted.deletedCount} expired users`);
 };
 
+const getUserDataSize = (dicomDataPath) => {
+  return 0;
+};
+
 export default {
   createUser,
   getUser,
   deleteUser,
   deleteExpiredUsers,
+  getUserDataSize,
 };

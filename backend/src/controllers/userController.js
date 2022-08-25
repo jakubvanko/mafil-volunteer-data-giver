@@ -1,26 +1,28 @@
 import userService from "../services/userService.js";
 
 const createUser = async (req, res) => {
-  const { name, email, secret, visitDate } = req.body;
+  const { name, email, secret, visitDate, studyInstanceUID } = req.body;
   const user = await userService.createUser(
     name,
     email,
     secret,
     visitDate,
-    req.file.path
+    studyInstanceUID
   );
   return res.status(201).json({ id: user._id });
 };
 
 const getUserFromParam = (param) => async (req, res) => {
-  const { _id, expirationDate, visitDate } =
+  const { _id, expirationDate, visitDate, dicomDataPath } =
     req.auth?.user?._id === req.params[param]
       ? req.auth.user
       : await userService.getUser(req.params[param]);
+  const dataSize = userService.getUserDataSize(dicomDataPath);
   return res.status(200).json({
     id: _id,
     expirationDate,
     visitDate,
+    dataSize,
   });
 };
 

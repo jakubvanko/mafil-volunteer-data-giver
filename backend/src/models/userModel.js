@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+  studyInstanceUID: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.pre("save", async function () {
