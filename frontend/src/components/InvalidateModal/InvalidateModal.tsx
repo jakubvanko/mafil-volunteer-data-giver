@@ -1,21 +1,24 @@
-import { Box, Button, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Button, Grid, Modal, TextField, Typography } from "@mui/material";
 import { Trans, useTranslation } from "react-i18next";
 import { MainCard } from "../MainCard/MainCard";
-import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ButtonPair } from "../ButtonPair/ButtonPair";
 import { useState } from "react";
 
 interface InvalidateModalProps {
   isModalOpen: boolean;
   setModalOpen: Function;
+  invalidateFunction: Function;
 }
 
 export const InvalidateModal = ({
   isModalOpen,
   setModalOpen,
+  invalidateFunction,
 }: InvalidateModalProps) => {
   const { t } = useTranslation();
   const [confirmationText, setConfirmationText] = useState<string>("");
+  const navigate = useNavigate();
 
   return (
     <Modal open={isModalOpen} onClose={() => setModalOpen(false)}>
@@ -49,14 +52,16 @@ export const InvalidateModal = ({
             first={{
               component: (
                 <Button
-                  component={RouterLink}
-                  to="../deleted"
                   fullWidth
                   variant="outlined"
                   color="error"
                   disabled={
                     !["ano", "yes"].includes(confirmationText.toLowerCase())
                   }
+                  onClick={async () => {
+                    await invalidateFunction();
+                    navigate("../../deleted");
+                  }}
                 >
                   {t("user.buttonDisableUserText")}
                 </Button>

@@ -9,6 +9,7 @@ const translationEn = {
       "To access your data, please enter your social security number.",
     textFieldLabel: "Social security number",
     buttonText: "Log in",
+    invalidSecret: "Failed to log in. Please try again.",
   },
   common: {
     buttonOutLinkText: "Go to the website of the MAFIL laboratory",
@@ -62,6 +63,7 @@ const translationCz = {
     description: "Pro přístup k vašim datům zadejte prosím své rodné číslo.",
     textFieldLabel: "Rodné číslo",
     buttonText: "Přihlásit se",
+    invalidSecret: "Přihlášení se nezdařilo. Zkuste to prosím znovu.",
   },
   common: {
     buttonOutLinkText: "Přejít na webstránku laboratoře MAFIL",
@@ -115,6 +117,7 @@ const translationSk = {
     description: "Pre prístup k vašim dátam prosím zadajte svoje rodné číslo.",
     textFieldLabel: "Rodné číslo",
     buttonText: "Prihlásiť sa",
+    invalidSecret: "Prihlásenie zlyhalo. Skúste to znova.",
   },
   common: {
     buttonOutLinkText: "Prejsť na webstránku laboratória MAFIL",

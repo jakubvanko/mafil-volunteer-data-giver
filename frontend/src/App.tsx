@@ -7,6 +7,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { BasicMessagePage } from "./components/BasicMessagePage/BasicMessagePage";
 import { applyLocalization } from "./i18n";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
+import {
+  deleteUser,
+  getUserData,
+  getUserDetails,
+  login,
+  UserDetails,
+} from "./scripts/api";
 
 applyLocalization();
 
@@ -20,6 +29,31 @@ const theme = createTheme({
 
 const App = () => {
   const { t } = useTranslation();
+  const [userToken, setUserToken] = useState<string>("");
+  const [userDetails, setUserDetails] = useState<UserDetails>();
+
+  const loginFunction = async (token: string, secret: string) => {
+    const loginData = await login(token, secret);
+    setUserToken(loginData.token);
+    loadUserDetails(loginData.token, loginData.id);
+  };
+
+  const loadUserDetails = async (token: string, userId: string) => {
+    setUserDetails(await getUserDetails(token, userId));
+  };
+
+  const logoutFunction = () => {
+    setUserToken("");
+    setUserDetails(undefined);
+  };
+
+  const downloadUserData = async () => {
+    await getUserData(userToken, userDetails!.id);
+  };
+
+  const invalidateFunction = async () => {
+    await deleteUser(userToken, userDetails!.id);
+  };
 
   return (
     <BrowserRouter>
@@ -27,8 +61,21 @@ const App = () => {
         <CssBaseline>
           <Header />
           <Routes>
-            <Route path="login/:token" element={<LoginPage />} />
-            <Route path="user" element={<UserPage />} />
+            <Route
+              path="login/:token"
+              element={<LoginPage loginFunction={loginFunction} />}
+            />
+            <Route
+              path="user"
+              element={
+                <UserPage
+                  userDetails={userDetails}
+                  logoutFunction={logoutFunction}
+                  downloadUserDataFunction={downloadUserData}
+                  invalidateFunction={invalidateFunction}
+                />
+              }
+            />
             <Route
               path="logout"
               element={
