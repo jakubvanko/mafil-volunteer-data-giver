@@ -17,12 +17,11 @@ const getUserFromParam = (param) => async (req, res) => {
     req.auth?.user?._id === req.params[param]
       ? req.auth.user
       : await userService.getUser(req.params[param]);
-  const dataSize = userService.getUserDataSize(dicomDataPath);
   return res.status(200).json({
     id: _id,
     expirationDate,
     visitDate,
-    dataSize,
+    dataSize: await userService.getUserDataSize(dicomDataPath),
   });
 };
 

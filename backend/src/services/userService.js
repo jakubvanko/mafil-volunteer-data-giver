@@ -1,5 +1,6 @@
 import UserModel from "../models/userModel.js";
 import mailService from "./mailService.js";
+import fs from "fs";
 
 const processDicomData = (path) => {
   return "src\\app.js";
@@ -42,9 +43,8 @@ const deleteExpiredUsers = async () => {
   console.log(`Deleted ${deleted.deletedCount} expired users`);
 };
 
-const getUserDataSize = (dicomDataPath) => {
-  return 0;
-};
+const getUserDataSize = async (dicomDataPath) =>
+  (await fs.promises.stat(dicomDataPath)).size / (1024 * 1024 * 1024);
 
 export default {
   createUser,

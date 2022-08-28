@@ -16,7 +16,8 @@ const app = express();
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 app.use(cors()); // Set origin for better security
 app.use(helmet());
-app.use(express.json()); // If form objects needed => app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/users", userRouter);
 app.use(handlers.defaultRoute);

@@ -24,7 +24,8 @@ router.post(
   userController.generateUserToken
 );
 
-router.get(
+router.post(
+  // using POST because XHR does not support native downloads
   "/:userId/data",
   auth.check(auth.isUserFromParam("userId")),
   userController.getUserData

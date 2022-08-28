@@ -2,7 +2,8 @@ import createError from "http-errors";
 import jsonwebtoken from "jsonwebtoken";
 import userService from "../services/userService.js";
 
-const extractBearerToken = (req) => req.headers.authorization?.split(" ")?.[1];
+const extractBearerToken = (req) =>
+  req.headers.authorization?.split(" ")?.[1] ?? req.body.access_token;
 
 const getUserFromToken = async (req, tokenSecret) => {
   const tokenBody = jsonwebtoken.verify(extractBearerToken(req), tokenSecret);
