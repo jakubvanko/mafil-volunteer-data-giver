@@ -24,9 +24,9 @@ const App = () => {
 
   return (
     <UserContextProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <BrowserRouter>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline>
             <Header />
             <Routes>
               <Route path="login/:emailToken" element={<LoginPage />} />
@@ -59,9 +59,9 @@ const App = () => {
                 }
               />
             </Routes>
-          </BrowserRouter>
-        </CssBaseline>
-      </ThemeProvider>
+          </CssBaseline>
+        </ThemeProvider>
+      </BrowserRouter>
     </UserContextProvider>
   );
 };

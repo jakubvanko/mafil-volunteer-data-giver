@@ -14,8 +14,9 @@ export const UserPage = () => {
   const navigate = useNavigate();
   const userContext = useUserContext();
 
-  if (!userContext.visitDate) {
-    navigate("../../error");
+  if (userContext.visitDate === undefined) {
+    navigate("../error");
+    return <></>;
   }
 
   return (
@@ -51,7 +52,7 @@ export const UserPage = () => {
           />
         </Typography>
         <ButtonPair
-          first={{
+          left={{
             component: (
               <Button
                 fullWidth
@@ -65,7 +66,7 @@ export const UserPage = () => {
             ),
             size: 8,
           }}
-          second={{
+          right={{
             component: (
               <Button
                 fullWidth

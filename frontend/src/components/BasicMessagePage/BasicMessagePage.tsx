@@ -11,23 +11,19 @@ interface BasicMessagePageProps {
 export const BasicMessagePage = ({
   headingText,
   descriptionText,
-}: BasicMessagePageProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <MainPageContainer>
-      <MainCard headingText={headingText}>
-        <Typography variant="body1">{descriptionText}</Typography>
-        <Button
-          fullWidth
-          variant="contained"
-          href="https://mafil.ceitec.cz/"
-          rel="noopener noreferrer"
-          sx={{ textAlign: "center" }}
-        >
-          {t("common.buttonOutLinkText")}
-        </Button>
-      </MainCard>
-    </MainPageContainer>
-  );
-};
+}: BasicMessagePageProps) => (
+  <MainPageContainer>
+    <MainCard headingText={headingText}>
+      <Typography variant="body1">{descriptionText}</Typography>
+      <Button
+        fullWidth
+        variant="contained"
+        href="https://mafil.ceitec.cz/"
+        rel="noopener noreferrer"
+        sx={{ textAlign: "center" }}
+      >
+        {useTranslation().t("common.buttonOutLinkText")}
+      </Button>
+    </MainCard>
+  </MainPageContainer>
+);

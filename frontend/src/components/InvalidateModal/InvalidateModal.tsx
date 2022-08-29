@@ -49,7 +49,7 @@ export const InvalidateModal = ({
             onChange={(event) => setConfirmationText(event.target.value)}
           />
           <ButtonPair
-            first={{
+            left={{
               component: (
                 <Button
                   fullWidth
@@ -58,8 +58,8 @@ export const InvalidateModal = ({
                   disabled={
                     !["ano", "yes"].includes(confirmationText.toLowerCase())
                   }
-                  onClick={async () => {
-                    await userContext.deleteAccount();
+                  onClick={() => {
+                    userContext.deleteAccount();
                     navigate("../../deleted");
                   }}
                 >
@@ -68,7 +68,7 @@ export const InvalidateModal = ({
               ),
               size: 6,
             }}
-            second={{
+            right={{
               component: (
                 <Button
                   fullWidth
