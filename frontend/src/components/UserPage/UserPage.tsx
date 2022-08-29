@@ -16,7 +16,7 @@ export const UserPage = () => {
 
   useEffect(() => {
     if (userContext.id === undefined && !userContext.isReloadPending) {
-      navigate("../error");
+      navigate("../error", { replace: true });
     }
   }, [userContext, navigate]);
 
@@ -62,7 +62,7 @@ export const UserPage = () => {
                 fullWidth
                 variant="contained"
                 color="success"
-                onClick={async () => await userContext.downloadData()}
+                onClick={userContext.downloadData}
               >
                 {t("user.buttonDownloadDataText")} (
                 {userContext.dataSize && userContext.dataSize!.toFixed(2)} GB)
