@@ -15,7 +15,7 @@ export const UserPage = () => {
   const userContext = useUserContext();
 
   useEffect(() => {
-    if (userContext.visitDate === undefined) {
+    if (userContext.id === undefined && !userContext.isReloadPending) {
       navigate("../error");
     }
   }, [userContext, navigate]);
