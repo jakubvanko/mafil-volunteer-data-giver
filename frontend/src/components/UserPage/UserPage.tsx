@@ -6,26 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { InvalidateModal } from "../InvalidateModal/InvalidateModal";
 import { ButtonPair } from "../ButtonPair/ButtonPair";
-import { UserDetails } from "../../scripts/api";
+import { useUserContext } from "../UserContextProvider/UserContextProvider";
 
-interface UserPageProps {
-  userDetails: UserDetails | undefined;
-  logoutFunction: Function;
-  downloadUserDataFunction: Function;
-  invalidateFunction: (token: string, secret: string) => Promise<void>;
-}
-
-export const UserPage = ({
-  userDetails,
-  logoutFunction,
-  downloadUserDataFunction,
-  invalidateFunction,
-}: UserPageProps) => {
+export const UserPage = () => {
   const { t } = useTranslation();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const userContext = useUserContext();
 
-  if (!userDetails) {
+  if (!userContext.visitDate) {
     navigate("../../error");
   }
 
@@ -36,21 +25,18 @@ export const UserPage = ({
         secondaryHeadingElement={
           <Typography variant="body2">
             {t("user.loginLinkAvailability")}{" "}
-            {userDetails &&
-              userDetails.expirationDate
-                .toLocaleDateString("cs-CZ")
-                .replaceAll(" ", "")}
+            {userContext
+              .expirationDate!.toLocaleDateString("cs-CZ")
+              .replaceAll(" ", "")}
           </Typography>
         }
       >
         <Typography variant="body1" sx={{ lineHeight: "2em" }}>
           <Trans
             values={{
-              visitDate:
-                userDetails &&
-                userDetails.visitDate
-                  .toLocaleDateString("cs-CZ")
-                  .replaceAll(" ", ""),
+              visitDate: userContext
+                .visitDate!.toLocaleDateString("cs-CZ")
+                .replaceAll(" ", ""),
             }}
             i18nKey="user.downloadInfoText"
             components={{
@@ -71,10 +57,10 @@ export const UserPage = ({
                 fullWidth
                 variant="contained"
                 color="success"
-                onClick={async () => await downloadUserDataFunction()}
+                onClick={async () => await userContext.downloadData()}
               >
                 {t("user.buttonDownloadDataText")} (
-                {userDetails && userDetails.dataSize.toFixed(2)} GB)
+                {userContext.dataSize!.toFixed(2)} GB)
               </Button>
             ),
             size: 8,
@@ -86,7 +72,7 @@ export const UserPage = ({
                 variant="outlined"
                 color="error"
                 onClick={() => {
-                  logoutFunction();
+                  userContext.logout();
                   navigate("../logout", { replace: true });
                 }}
               >
@@ -97,11 +83,7 @@ export const UserPage = ({
           }}
         />
       </MainCard>
-      <InvalidateModal
-        isModalOpen={isModalOpen}
-        setModalOpen={setModalOpen}
-        invalidateFunction={invalidateFunction}
-      />
+      <InvalidateModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
     </MainPageContainer>
   );
 };

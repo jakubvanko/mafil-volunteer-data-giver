@@ -4,21 +4,21 @@ import { MainCard } from "../MainCard/MainCard";
 import { useNavigate } from "react-router-dom";
 import { ButtonPair } from "../ButtonPair/ButtonPair";
 import { useState } from "react";
+import { useUserContext } from "../UserContextProvider/UserContextProvider";
 
 interface InvalidateModalProps {
   isModalOpen: boolean;
   setModalOpen: Function;
-  invalidateFunction: Function;
 }
 
 export const InvalidateModal = ({
   isModalOpen,
   setModalOpen,
-  invalidateFunction,
 }: InvalidateModalProps) => {
   const { t } = useTranslation();
   const [confirmationText, setConfirmationText] = useState<string>("");
   const navigate = useNavigate();
+  const userContext = useUserContext();
 
   return (
     <Modal open={isModalOpen} onClose={() => setModalOpen(false)}>
@@ -59,7 +59,7 @@ export const InvalidateModal = ({
                     !["ano", "yes"].includes(confirmationText.toLowerCase())
                   }
                   onClick={async () => {
-                    await invalidateFunction();
+                    await userContext.deleteAccount();
                     navigate("../../deleted");
                   }}
                 >
