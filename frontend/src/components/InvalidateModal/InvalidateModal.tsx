@@ -20,15 +20,20 @@ export const InvalidateModal = ({
   const navigate = useNavigate();
   const userContext = useUserContext();
 
+  const closeModal = () => {
+    setModalOpen(false);
+    setConfirmationText("");
+  };
+
   return (
-    <Modal open={isModalOpen} onClose={() => setModalOpen(false)}>
+    <Modal open={isModalOpen} onClose={closeModal}>
       <Grid
         minHeight="100vh"
         container
         justifyContent="center"
         alignItems={{ xs: "stretch", sm: "center" }}
         onClick={(event) =>
-          event.target === event.currentTarget && setModalOpen(false)
+          event.target === event.currentTarget && closeModal()
         }
       >
         <MainCard headingText={t("invalidate.headingText")}>
@@ -56,7 +61,8 @@ export const InvalidateModal = ({
                   variant="outlined"
                   color="error"
                   disabled={
-                    !["ano", "yes"].includes(confirmationText.toLowerCase())
+                    confirmationText.toLowerCase() !==
+                    t("invalidate.confirmationText").toLowerCase()
                   }
                   onClick={() => {
                     userContext.deleteAccount();
@@ -74,7 +80,7 @@ export const InvalidateModal = ({
                   fullWidth
                   variant="contained"
                   color="success"
-                  onClick={() => setModalOpen(false)}
+                  onClick={closeModal}
                 >
                   {t("invalidate.buttonGoBack")}
                 </Button>

@@ -1,5 +1,6 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 axios.defaults.baseURL = "http://localhost:3001/api/";
 
@@ -49,9 +50,17 @@ class UserContextObject {
     document.body.removeChild(form);
   };
 
-  public deleteAccount = () => {
-    console.log("deleting...");
-    throw new Error("not implemented");
+  public deleteAccount = () =>
+    axios.delete(`/users/${this.id}`, {
+      headers: { Authorization: `Bearer ${this.token}` },
+    });
+
+  public isEmailToken = (string: string) => {
+    try {
+      return jwt_decode<any>(string)._id !== undefined;
+    } catch {
+      return false;
+    }
   };
 }
 

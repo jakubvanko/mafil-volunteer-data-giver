@@ -54,6 +54,7 @@ const translationEn = {
     <br/>
     If you really want to invalidate your login link, type the word <bold>YES</bold> in the following field.
     `,
+    confirmationText: "YES",
   },
 };
 
@@ -108,6 +109,7 @@ const translationCz = {
     <br/>
     Chcete-li opravdu zneplatnit svůj přihlašovací odkaz, napište do následujícího pole slovo <bold>ANO</bold>.
     `,
+    confirmationText: "ANO",
   },
 };
 
@@ -162,6 +164,7 @@ const translationSk = {
     <br/>
     Ak chcete naozaj zneplatniť svoj prihlasovací odkaz, napíšte do nasledujúceho poľa slovo <bold>ANO</bold>.
     `,
+    confirmationText: "ANO",
   },
 };
 
