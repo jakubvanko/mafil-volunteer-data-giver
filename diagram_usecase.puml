@@ -1,0 +1,29 @@
+@startuml usecase
+
+'Define actors
+actor "Volunteer" as a_volunteer
+actor "MAFILDB" as a_mafildb
+actor "Time" as a_time
+
+'Define use-cases
+rectangle "Application" as s_application {
+    usecase "CreateAccount" as u_create
+    usecase "Login" as u_login
+    usecase "GetAcountDetails" as u_details
+    usecase "DownloadData" as u_download
+    usecase "DeleteAccount" as u_delete
+}
+
+'Define use connections between actors and use-cases
+left to right direction
+a_volunteer -- u_login
+a_volunteer -- u_details
+a_volunteer -- u_download
+a_volunteer -- u_delete
+'Connections between system actors and use-cases
+a_mafildb ---u- u_create
+a_mafildb ---u- u_details
+a_mafildb ---u- u_delete
+a_time ---u- u_delete
+
+@enduml
