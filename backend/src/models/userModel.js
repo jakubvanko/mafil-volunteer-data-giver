@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
   },
   dicomDataPath: {
     type: String,
-    required: true,
+    required: false,
   },
   visitDate: {
     type: Date,

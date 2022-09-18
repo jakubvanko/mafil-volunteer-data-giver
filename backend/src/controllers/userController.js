@@ -1,13 +1,15 @@
 import userService from "../services/userService.js";
 
 const createUser = async (req, res) => {
-  const { name, email, secret, visitDate, studyInstanceUID } = req.body;
+  const { name, email, secret, visitDate, studyInstanceUID, dicomDataType } =
+    req.body;
   const user = await userService.createUser(
     name,
     email,
     secret,
     visitDate,
-    studyInstanceUID
+    studyInstanceUID,
+    dicomDataType
   );
   return res.status(201).json({ id: user._id });
 };
@@ -40,12 +42,19 @@ const getUserData = (req, res) => {
   return res.status(200).download(req.auth.user.dicomDataPath);
 };
 
-const processDicomData = (req, res) => {
-  throw new Error("Not implemented");
-};
+const processDicomDataFromParam =
+  (userParam, filesParam) => async (req, res) => {
+    await userService.processDicomData(
+      req.params[userParam],
+      req.params[filesParam]
+    );
+    return res.status(204).json();
+  };
 
-const getUsersByStudyInstance = async (req, res) => {
-  throw new Error("Not implemented");
+const getUsersByStudyInstanceFromParam = (param) => async (req, res) => {
+  return res
+    .status(200)
+    .json(await userService.getUsersByStudyInstanceUID(req.params[param]));
 };
 
 export default {
@@ -54,6 +63,6 @@ export default {
   deleteUserFromParam,
   generateUserToken,
   getUserData,
-  processDicomData,
-  getUsersByStudyInstance,
+  processDicomDataFromParam,
+  getUsersByStudyInstanceFromParam,
 };

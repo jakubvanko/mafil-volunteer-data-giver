@@ -29,7 +29,7 @@ router.put(
   "/:userId/data",
   auth.check(auth.isAdmin),
   multer().array("files"),
-  userController.processDicomData
+  userController.processDicomDataFromParam("userId", "files")
 );
 
 router.post(
@@ -42,7 +42,7 @@ router.post(
 router.get(
   "/study/:studyInstance",
   auth.check(auth.isAdmin),
-  userController.getUsersByStudyInstance
+  userController.getUsersByStudyInstanceFromParam("studyInstance")
 );
 
 export default router;
