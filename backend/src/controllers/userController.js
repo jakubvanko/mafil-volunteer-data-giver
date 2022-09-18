@@ -40,10 +40,20 @@ const getUserData = (req, res) => {
   return res.status(200).download(req.auth.user.dicomDataPath);
 };
 
+const processDicomData = (req, res) => {
+  throw new Error("Not implemented");
+};
+
+const getUsersByStudyInstance = async (req, res) => {
+  throw new Error("Not implemented");
+};
+
 export default {
   createUser,
   getUserFromParam,
   deleteUserFromParam,
   generateUserToken,
   getUserData,
+  processDicomData,
+  getUsersByStudyInstance,
 };

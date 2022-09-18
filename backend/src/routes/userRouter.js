@@ -1,10 +1,17 @@
 import express from "express";
+import multer from "multer";
 import auth from "../middleware/auth.js";
 import userController from "../controllers/userController.js";
 
 const router = express.Router();
 
 router.post("/", auth.check(auth.isAdmin), userController.createUser);
+
+router.post(
+  "/tokens",
+  auth.check(auth.isValidUserLogin),
+  userController.generateUserToken
+);
 
 router.get(
   "/:userId",
@@ -18,10 +25,11 @@ router.delete(
   userController.deleteUserFromParam("userId")
 );
 
-router.post(
-  "/tokens",
-  auth.check(auth.isValidUserLogin),
-  userController.generateUserToken
+router.put(
+  "/:userId/data",
+  auth.check(auth.isAdmin),
+  multer().array("files"),
+  userController.processDicomData
 );
 
 router.post(
@@ -29,6 +37,12 @@ router.post(
   "/:userId/data",
   auth.check(auth.isUserFromParam("userId")),
   userController.getUserData
+);
+
+router.get(
+  "/study/:studyInstance",
+  auth.check(auth.isAdmin),
+  userController.getUsersByStudyInstance
 );
 
 export default router;
