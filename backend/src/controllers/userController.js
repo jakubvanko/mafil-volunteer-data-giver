@@ -1,4 +1,5 @@
 import userService from "../services/userService.js";
+import UserModel from "../models/userModel.js";
 
 const createUser = async (req, res) => {
   const { name, email, secret, visitDate, studyInstanceUID, dicomDataType } =
@@ -15,20 +16,20 @@ const createUser = async (req, res) => {
 };
 
 const getUserFromParam = (param) => async (req, res) => {
-  const { _id, expirationDate, visitDate, dicomDataPath } =
+  const user =
     req.auth?.user?._id === req.params[param]
       ? req.auth.user
-      : await userService.getUser(req.params[param]);
+      : await UserModel.promiseFindById(req.params[param]);
   return res.status(200).json({
-    id: _id,
-    expirationDate,
-    visitDate,
-    dataSize: await userService.getUserDataSize(dicomDataPath),
+    id: user._id,
+    expirationDate: user.expirationDate,
+    visitDate: user.visitDate,
+    dataSize: await user.getDataPackageSize(),
   });
 };
 
 const deleteUserFromParam = (param) => async (req, res) => {
-  await userService.deleteUser(req.params[param]);
+  await UserModel.promiseDeleteById(req.params[param]);
   return res.status(204).json();
 };
 
@@ -44,9 +45,13 @@ const getUserData = (req, res) => {
 
 const processDicomDataFromParam =
   (userParam, filesParam) => async (req, res) => {
-    await userService.processDicomData(
-      req.params[userParam],
-      req.params[filesParam]
+    const user = await UserModel.promiseFindById(req.params[userParam]);
+    await user.createDataPackage(req.params[filesParam]);
+    mailService.sendLoginEmail(
+      user.email,
+      user.name,
+      user.visitDate,
+      userService.generateLoginLink(user)
     );
     return res.status(204).json();
   };
@@ -54,7 +59,7 @@ const processDicomDataFromParam =
 const getUsersByStudyInstanceFromParam = (param) => async (req, res) => {
   return res
     .status(200)
-    .json(await userService.getUsersByStudyInstanceUID(req.params[param]));
+    .json(await UserModel.findByStudyInstanceUID(req.params[param]));
 };
 
 export default {

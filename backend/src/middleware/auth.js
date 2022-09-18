@@ -1,13 +1,13 @@
 import createError from "http-errors";
 import jsonwebtoken from "jsonwebtoken";
-import userService from "../services/userService.js";
+import UserModel from "../models/userModel.js";
 
 const extractBearerToken = (req) =>
   req.headers.authorization?.split(" ")?.[1] ?? req.body.access_token;
 
 const getUserFromToken = async (req, tokenSecret) => {
   const tokenBody = jsonwebtoken.verify(extractBearerToken(req), tokenSecret);
-  req.auth = { user: await userService.getUser(tokenBody._id) };
+  req.auth = { user: await UserModel.promiseFindById(tokenBody._id) };
 };
 
 const isAdmin = (req) =>

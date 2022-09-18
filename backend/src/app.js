@@ -3,8 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
-import "express-async-errors";
-// Handle async errors without try and catch blocks => import "express-async-errors"
+import "express-async-errors"; // Handle async errors without try and catch blocks
 
 import "./config/env.js";
 import "./config/database.js";

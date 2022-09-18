@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import jsonwebtoken from "jsonwebtoken";
 import ms from "ms";
 import bcrypt from "bcryptjs";
+import fs from "fs";
 
 const userSchema = mongoose.Schema({
   name: {
@@ -59,6 +60,34 @@ userSchema.methods.generateLoginToken = function () {
   return jsonwebtoken.sign({ _id: this._id }, process.env.LOGIN_TOKEN_SECRET, {
     expiresIn: process.env.LOGIN_TOKEN_EXPIRATION,
   });
+};
+
+userSchema.methods.getDataPackageSize = async function () {
+  return (
+    (await fs.promises.stat(this.dicomDataPath)).size / (1024 * 1024 * 1024)
+  );
+};
+
+userSchema.methods.createDataPackage = async function (files) {
+  throw new Error("userSchema.methods.createDataPackage: Not implemented");
+};
+
+userSchema.statics.deleteExpiredAccounts = async function () {
+  return (
+    await this.deleteMany().where("expirationDate").lte(Date.now()).exec()
+  ).deletedCount;
+};
+
+userSchema.statics.promiseFindById = function (id) {
+  return this.findById(id).exec();
+};
+
+userSchema.statics.promiseDeleteById = function (id) {
+  return this.findByIdAndDelete(id).exec();
+};
+
+userSchema.statics.findByStudyInstanceUID = function (studyInstanceUID) {
+  return this.find({ studyInstanceUID }, "_id").exec();
 };
 
 export default mongoose.model("User", userSchema);
