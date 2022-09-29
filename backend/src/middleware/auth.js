@@ -19,7 +19,7 @@ const isUserFromParam = (param) => async (req) => {
 };
 
 const isValidUserLogin = async (req) => {
-  await getUserFromToken(req, process.env.LOGIN_TOKEN_SECRET);
+  await getUserFromToken(req, process.env.EMAIL_TOKEN_SECRET);
   return await req.auth.user.validateSecret(req.body.secret);
 };
 

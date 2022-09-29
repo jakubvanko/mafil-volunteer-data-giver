@@ -1,17 +1,17 @@
-import userService from "../services/userService.js";
 import UserModel from "../models/userModel.js";
 
 const createUser = async (req, res) => {
   const { name, email, secret, visitDate, studyInstanceUID, dicomDataType } =
     req.body;
-  const user = await userService.createUser(
+  const user = new UserModel({
     name,
     email,
     secret,
     visitDate,
     studyInstanceUID,
-    dicomDataType
-  );
+  });
+  await user.save();
+  throw new Error("requestDicomData: Not implemented");
   return res.status(201).json({ id: user._id });
 };
 
@@ -51,7 +51,7 @@ const processDicomDataFromParam =
       user.email,
       user.name,
       user.visitDate,
-      userService.generateLoginLink(user)
+      user.generateLoginLink()
     );
     return res.status(204).json();
   };
