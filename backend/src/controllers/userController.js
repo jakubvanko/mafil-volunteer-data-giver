@@ -1,17 +1,16 @@
 import UserModel from "../models/userModel.js";
 
 const createUser = async (req, res) => {
-  const { name, email, secret, visitDate, studyInstanceUID, dicomDataType } =
-    req.body;
   const user = new UserModel({
-    name,
-    email,
-    secret,
-    visitDate,
-    studyInstanceUID,
+    name: req.body.name,
+    email: req.body.email,
+    secret: req.body.secret,
+    visitDate: req.body.visitDate,
+    studyInstanceUID: req.body.studyInstanceUID,
+    dicomDataType: req.body.dicomDataType,
   });
   await user.save();
-  throw new Error("requestDicomData: Not implemented");
+  await user.requestDicomData();
   return res.status(201).json({ id: user._id });
 };
 

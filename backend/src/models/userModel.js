@@ -4,6 +4,7 @@ import ms from "ms";
 import bcrypt from "bcryptjs";
 import fs from "fs";
 import util from "util";
+import axios from "axios";
 import { exec } from "child_process";
 
 const promiseExec = util.promisify(exec);
@@ -37,6 +38,10 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   studyInstanceUID: {
+    type: String,
+    required: true,
+  },
+  dicomDataType: {
     type: String,
     required: true,
   },
@@ -92,6 +97,15 @@ userSchema.methods.getDataPackageSize = async function () {
 
 userSchema.methods.generateLoginLink = async function () {
   return process.env.LOGIN_URL + this.generateEmailToken();
+};
+
+userSchema.methods.requestDicomData = async function () {
+  return axios.get(process.env.PACS_API_URL, {
+    params: {
+      studyInstanceUID: this.studyInstanceUID,
+      type: this.dicomDataType,
+    },
+  });
 };
 
 userSchema.methods.createDataPackage = async function (files) {
