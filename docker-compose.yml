@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  database:
+    image: mongo:6.0.2-focal
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+  backend:
+    build: ./backend
+    ports:
+      - 3001:3001
+    volumes:
+      - data:/usr/src/app/archives
+    environment:
+      DATABASE_URI: mongodb://database
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+
+volumes:
+  data:
+  archives:
