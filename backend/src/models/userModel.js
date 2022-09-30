@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 import jsonwebtoken from "jsonwebtoken";
 import ms from "ms";
 import bcrypt from "bcryptjs";
-import fs from "fs";
+import fs from "fs-extra";
 import util from "util";
 import axios from "axios";
+import archiver from "archiver";
 import { exec } from "child_process";
 
 const promiseExec = util.promisify(exec);
@@ -24,15 +25,6 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  expirationDate: {
-    type: Date,
-    required: true,
-    default: new Date(Date.now() + ms(process.env.EMAIL_TOKEN_EXPIRATION)),
-  },
-  dicomDataPath: {
-    type: String,
-    required: false,
-  },
   visitDate: {
     type: Date,
     required: true,
@@ -44,6 +36,15 @@ const userSchema = mongoose.Schema({
   dicomDataType: {
     type: String,
     required: true,
+  },
+  expirationDate: {
+    type: Date,
+    required: true,
+    default: new Date(Date.now() + ms(process.env.EMAIL_TOKEN_EXPIRATION)),
+  },
+  dicomDataPath: {
+    type: String,
+    required: false,
   },
 });
 
@@ -90,12 +91,10 @@ userSchema.methods.generateEmailToken = function () {
 };
 
 userSchema.methods.getDataPackageSize = async function () {
-  return (
-    (await fs.promises.stat(this.dicomDataPath)).size / (1024 * 1024 * 1024)
-  );
+  return (await fs.stat(this.dicomDataPath)).size / (1024 * 1024 * 1024);
 };
 
-userSchema.methods.generateLoginLink = async function () {
+userSchema.methods.generateLoginLink = function () {
   return process.env.LOGIN_URL + this.generateEmailToken();
 };
 
@@ -108,9 +107,28 @@ userSchema.methods.requestDicomData = async function () {
   });
 };
 
-userSchema.methods.createDataPackage = async function (files) {
-  const { stdout, stderr } = await promiseExec("dcmmkdir --recurse SMTH SMTH");
-  throw new Error("userSchema.methods.createDataPackage: Not implemented");
+userSchema.methods.createDataPackage = async function () {
+  const folderToZip = `tmp/${this._id}`;
+  const archiveStoragePath = "./archives/";
+  const userArchivePath = `${archiveStoragePath}${this.name.replace(
+    " ",
+    "_"
+  )}_${this.id}.zip`;
+  await fs.ensureDir(archiveStoragePath);
+  await promiseExec(`dcmmkdir --recurse`, {
+    cwd: folderToZip,
+  });
+  await fs.copy("dicom_viewer", folderToZip);
+  const output = fs.createWriteStream(userArchivePath);
+  const archive = archiver("zip", {
+    zlib: { level: 9 },
+  });
+  archive.pipe(output);
+  archive.directory(folderToZip, false);
+  await archive.finalize();
+  await fs.remove(folderToZip);
+  this.dicomDataPath = userArchivePath;
+  this.save();
 };
 
 export default mongoose.model("User", userSchema);

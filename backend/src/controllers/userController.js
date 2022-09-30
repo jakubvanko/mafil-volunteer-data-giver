@@ -1,4 +1,5 @@
 import UserModel from "../models/userModel.js";
+import mailService from "../services/mailService.js";
 
 const createUser = async (req, res) => {
   const user = new UserModel({
@@ -45,7 +46,7 @@ const getUserData = (req, res) => {
 const processDicomDataFromParam =
   (userParam, filesParam) => async (req, res) => {
     const user = await UserModel.promiseFindById(req.params[userParam]);
-    await user.createDataPackage(req.params[filesParam]);
+    await user.createDataPackage();
     mailService.sendLoginEmail(
       user.email,
       user.name,

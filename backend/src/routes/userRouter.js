@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import auth from "../middleware/auth.js";
 import userController from "../controllers/userController.js";
+import fs from "fs-extra";
 
 const router = express.Router();
 
@@ -28,7 +29,16 @@ router.delete(
 router.put(
   "/:userId/data",
   auth.check(auth.isAdmin),
-  multer().array("files"),
+  multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => {
+        const directory = `tmp/${req.params["userId"]}/DICOM`;
+        fs.emptyDirSync(directory);
+        cb(null, directory);
+      },
+      filename: (req, file, cb) => cb(null, file.originalname),
+    }),
+  }).array("files"),
   userController.processDicomDataFromParam("userId", "files")
 );
 

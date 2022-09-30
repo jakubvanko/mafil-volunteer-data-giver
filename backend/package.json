@@ -7,12 +7,14 @@
     "start": "node src/app.js"
   },
   "dependencies": {
+    "archiver": "^5.3.1",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "~4.16.1",
     "express-async-errors": "^3.1.1",
+    "fs-extra": "^10.1.0",
     "handlebars": "^4.7.7",
     "helmet": "^5.1.0",
     "http-errors": "~1.6.3",
