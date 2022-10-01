@@ -33,7 +33,7 @@ router.put(
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
         const directory = `tmp/${req.params["userId"]}/DICOM`;
-        fs.emptyDirSync(directory);
+        fs.ensureDirSync(directory);
         cb(null, directory);
       },
       filename: (req, file, cb) => cb(null, file.originalname),

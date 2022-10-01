@@ -36,6 +36,7 @@ const userSchema = mongoose.Schema({
   dicomDataType: {
     type: String,
     required: true,
+    default: "ANATOMICAL",
   },
   expirationDate: {
     type: Date,
