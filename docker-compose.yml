@@ -12,7 +12,9 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - data:/usr/src/app/archives
+      - archives:/usr/src/app/archives
+    depends_on:
+      - database
     environment:
       DATABASE_URI: mongodb://database
   frontend:
