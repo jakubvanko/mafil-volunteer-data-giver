@@ -41,7 +41,8 @@ const userSchema = mongoose.Schema({
   expirationDate: {
     type: Date,
     required: true,
-    default: new Date(Date.now() + ms(process.env.EMAIL_TOKEN_EXPIRATION)),
+    default: () =>
+      new Date(Date.now() + ms(process.env.EMAIL_TOKEN_EXPIRATION)),
   },
   dicomDataPath: {
     type: String,
@@ -105,6 +106,7 @@ userSchema.methods.requestDicomData = async function () {
       studyInstanceUID: this.studyInstanceUID,
       type: this.dicomDataType,
     },
+    headers: { Authorization: `Bearer ${process.env.OUTGOING_API_KEY}` },
   });
 };
 
