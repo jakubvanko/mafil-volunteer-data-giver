@@ -119,9 +119,10 @@ userSchema.methods.createDataPackage = async function () {
   )}_${this.id}.zip`;
   await fs.ensureDir(archiveStoragePath);
   await promiseExec(`dcmmkdir --recurse`, {
-    cwd: folderToZip,
+    cwd: folderToZip + "/data",
   });
-  await fs.copy("dicom_viewer", folderToZip);
+  await fs.copy("dicom_viewer/program", folderToZip + "/data");
+  await fs.copy("dicom_viewer/startup_script", folderToZip);
   const output = fs.createWriteStream(userArchivePath);
   const archive = archiver("zip", {
     zlib: { level: 9 },

@@ -43,18 +43,17 @@ const getUserData = (req, res) => {
   return res.status(200).download(req.auth.user.dicomDataPath);
 };
 
-const processDicomDataFromParam =
-  (userParam, filesParam) => async (req, res) => {
-    const user = await UserModel.promiseFindById(req.params[userParam]);
-    await user.createDataPackage();
-    mailService.sendLoginEmail(
-      user.email,
-      user.name,
-      user.visitDate,
-      user.generateLoginLink()
-    );
-    return res.status(204).json();
-  };
+const processDicomDataFromParam = (userParam) => async (req, res) => {
+  const user = await UserModel.promiseFindById(req.params[userParam]);
+  await user.createDataPackage();
+  mailService.sendLoginEmail(
+    user.email,
+    user.name,
+    user.visitDate,
+    user.generateLoginLink()
+  );
+  return res.status(204).json();
+};
 
 const getUsersByStudyInstanceFromParam = (param) => async (req, res) => {
   return res
