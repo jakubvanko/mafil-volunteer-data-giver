@@ -44,6 +44,11 @@ const userSchema = mongoose.Schema({
     default: () =>
       new Date(Date.now() + ms(process.env.EMAIL_TOKEN_EXPIRATION)),
   },
+  shouldSendReminder: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
   dicomDataPath: {
     type: String,
     required: false,

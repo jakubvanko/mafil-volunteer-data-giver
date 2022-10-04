@@ -74,8 +74,10 @@ const generateUserToken = (req, res) => {
   });
 };
 
-const getUserData = (req, res) => {
+const getUserData = async (req, res) => {
   res.status(200).download(req.auth.user.dicomDataPath);
+  req.auth.user.shouldSendReminder = false;
+  await req.auth.user.save();
   return Log.createLog({
     eventType: "USER_REQUEST",
     eventName: "ACCOUNT_DATA_DOWNLOADED",
