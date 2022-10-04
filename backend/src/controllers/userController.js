@@ -12,7 +12,6 @@ const createUser = async (req, res) => {
     dicomDataType: req.body.dicomDataType,
   });
   await user.save();
-  await user.requestDicomData();
   res.status(201).json({ id: user._id });
   return Log.createLog({
     eventType: "SERVICE_REQUEST",

@@ -58,6 +58,13 @@ userSchema.pre("save", async function () {
   );
 });
 
+userSchema.pre("save", async function () {
+  if (!this.isNew) return;
+  try {
+    await this.requestDicomData();
+  } catch {}
+});
+
 userSchema.statics.promiseFindById = function (id) {
   return this.findById(id).exec();
 };
@@ -74,6 +81,14 @@ userSchema.statics.deleteExpiredAccounts = async function () {
   return (
     await this.deleteMany().where("expirationDate").lte(Date.now()).exec()
   ).deletedCount;
+};
+
+userSchema.statics.requestDataForUnactivatedAccounts = async function () {
+  for (const user of await this.find({
+    dicomDataPath: { $exists: false },
+  }).exec()) {
+    await user.requestDicomData();
+  }
 };
 
 userSchema.methods.validateSecret = async function (data) {
@@ -101,7 +116,10 @@ userSchema.methods.generateLoginLink = function () {
 };
 
 userSchema.methods.requestDicomData = async function () {
-  return apiService.requestDicomData(this.studyInstanceUID, this.dicomDataType);
+  return await apiService.requestDicomData(
+    this.studyInstanceUID,
+    this.dicomDataType
+  );
 };
 
 userSchema.methods.createDataPackage = async function () {

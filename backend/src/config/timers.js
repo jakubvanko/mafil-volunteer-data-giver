@@ -21,6 +21,27 @@ setIntervalImmediately(async () => {
 
 setIntervalImmediately(async () => {
   try {
+    await UserModel.requestDataForUnactivatedAccounts();
+    await Log.createLog({
+      eventType: "AUTOMATIC",
+      eventName: "UNACTIVATED_ACCOUNTS_DATA_REQUESTED",
+      message: `Successfully requested Dicom data for unactivated accounts`,
+      details: {},
+    });
+  } catch (error) {
+    await Log.createLog({
+      eventType: "AUTOMATIC",
+      eventName: "UNACTIVATED_ACCOUNTS_DATA_REQUEST_ERROR",
+      message: `Unable to request Dicom data for unactivated accounts`,
+      details: {
+        error: error.message,
+      },
+    });
+  }
+}, ms("1d"));
+
+setIntervalImmediately(async () => {
+  try {
     await Log.dispatchAll();
     await Log.createLog({
       eventType: "AUTOMATIC",

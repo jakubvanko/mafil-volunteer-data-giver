@@ -3,7 +3,7 @@ import Log from "../models/logModel.js";
 
 const requestDicomData = async (studyInstanceUID, type) => {
   try {
-    result = await axios.get(process.env.PACS_API_URL, {
+    await axios.get(process.env.PACS_API_URL, {
       params: {
         studyInstanceUID,
         type,
@@ -13,7 +13,7 @@ const requestDicomData = async (studyInstanceUID, type) => {
     return Log.createLog({
       eventType: "AUTOMATIC",
       eventName: "DICOM_DATA_REQUESTED",
-      message: `Dicom data was requested from ${process.env.PACS_API_URL}`,
+      message: `Dicom data request sent to ${process.env.PACS_API_URL}`,
       details: {
         study_instance_uid: studyInstanceUID,
         type: type,
@@ -23,13 +23,14 @@ const requestDicomData = async (studyInstanceUID, type) => {
     Log.createLog({
       eventType: "AUTOMATIC",
       eventName: "DICOM_DATA_REQUEST_ERROR",
-      message: `Dicom data was requested from ${process.env.PACS_API_URL} but an error occured`,
+      message: `Dicom data request sent to ${process.env.PACS_API_URL} but an error occured`,
       details: {
         study_instance_uid: studyInstanceUID,
         type,
         error: error.message,
       },
     });
+    throw error;
   }
 };
 
