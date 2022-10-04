@@ -4,9 +4,9 @@ import ms from "ms";
 import bcrypt from "bcryptjs";
 import fs from "fs-extra";
 import util from "util";
-import axios from "axios";
 import archiver from "archiver";
 import { exec } from "child_process";
+import apiService from "../services/apiService.js";
 
 const promiseExec = util.promisify(exec);
 
@@ -101,13 +101,7 @@ userSchema.methods.generateLoginLink = function () {
 };
 
 userSchema.methods.requestDicomData = async function () {
-  return axios.get(process.env.PACS_API_URL, {
-    params: {
-      studyInstanceUID: this.studyInstanceUID,
-      type: this.dicomDataType,
-    },
-    headers: { Authorization: `Bearer ${process.env.OUTGOING_API_KEY}` },
-  });
+  return apiService.requestDicomData(this.studyInstanceUID, this.dicomDataType);
 };
 
 userSchema.methods.createDataPackage = async function () {

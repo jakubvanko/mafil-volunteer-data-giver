@@ -4,6 +4,7 @@ import url from "url";
 import path from "path";
 import handlebars from "handlebars";
 import mjml from "mjml";
+import Log from "../models/userModel.js";
 
 const getTemplatePath = (templateName) =>
   path.join(
@@ -43,8 +44,26 @@ const sendMail = async (to, subject, html) => {
     html,
   });
   if (mailResult.messageId === undefined) {
+    Log.createLog({
+      eventType: "AUTOMATIC",
+      eventName: "MAIL_ERROR",
+      message: `A mail (${subject}) was sent to ${to} but an error occured`,
+      details: {
+        receiver: to,
+        subject,
+      },
+    });
     throw new Error("Mail error");
   }
+  Log.createLog({
+    eventType: "AUTOMATIC",
+    eventName: "MAIL_SENT",
+    message: `A mail (${subject}) was sent to ${to}`,
+    details: {
+      receiver: to,
+      subject,
+    },
+  });
 };
 
 const sendLoginEmail = (emailAddress, name, visitDate, loginLink) =>

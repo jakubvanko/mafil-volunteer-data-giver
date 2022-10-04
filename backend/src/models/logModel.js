@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import axios from "axios";
+import apiService from "../services/apiService.js";
 
 const logSchema = mongoose.Schema(
   {
@@ -46,17 +46,12 @@ logSchema.statics.createLog = async function (logData) {
 
 logSchema.methods.dispatchToApi = async function () {
   try {
-    await axios.post(
-      process.env.LOG_API_URL,
-      {
-        application: "PVD",
-        date: this.createdAt,
-        event_type: this.eventType,
-        event_name: this.eventName,
-        message: this.message,
-        details: this.details,
-      },
-      { headers: { Authorization: `Bearer ${process.env.OUTGOING_API_KEY}` } }
+    await apiService.sendLogs(
+      this.createdAt,
+      this.eventType,
+      this.eventName,
+      this.message,
+      this.details
     );
     this.dispatched = true;
     return true;
