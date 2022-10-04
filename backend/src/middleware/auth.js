@@ -1,6 +1,7 @@
 import createError from "http-errors";
 import jsonwebtoken from "jsonwebtoken";
 import UserModel from "../models/userModel.js";
+import Log from "../models/logModel.js";
 
 const extractBearerToken = (req) =>
   req.headers.authorization?.split(" ")?.[1] ?? req.body.access_token;
@@ -37,6 +38,12 @@ const check =
         }
       } catch {}
     }
+    Log.createLog({
+      eventType: "AUTH",
+      eventName: "AUTH_INVALID",
+      message: `Invalid auth data submitted`,
+      details: {},
+    });
     return next(createError(401));
   };
 

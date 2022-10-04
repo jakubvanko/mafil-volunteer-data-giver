@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import apiService from "../services/apiService.js";
+import ms from "ms";
 
 const logSchema = mongoose.Schema(
   {
@@ -37,27 +38,39 @@ logSchema.pre("save", async function () {
         this.eventName
       }\n${this.message} - details: ${JSON.stringify(this.details)}`
     );
-  await this.dispatchToApi();
+  try {
+    await this.dispatchToApi();
+  } catch {}
 });
 
 logSchema.statics.createLog = async function (logData) {
   await new this(logData).save();
 };
 
-logSchema.methods.dispatchToApi = async function () {
-  try {
-    await apiService.sendLogs(
-      this.createdAt,
-      this.eventType,
-      this.eventName,
-      this.message,
-      this.details
-    );
-    this.dispatched = true;
-    return true;
-  } catch {
-    return false;
+logSchema.statics.dispatchAll = async function () {
+  for (const log of await this.find({ dispatched: false }).exec()) {
+    await log.dispatchToApi();
   }
+};
+
+logSchema.statics.deleteOldLogs = async function () {
+  return (
+    await this.deleteMany()
+      .where("createdAt")
+      .lte(new Date(Date.now() - ms(process.env.LOG_ENTRY_EXPIRATION)))
+      .exec()
+  ).deletedCount;
+};
+
+logSchema.methods.dispatchToApi = async function () {
+  await apiService.sendLogs(
+    this.createdAt,
+    this.eventType,
+    this.eventName,
+    this.message,
+    this.details
+  );
+  this.dispatched = true;
 };
 
 export default mongoose.model("Log", logSchema);

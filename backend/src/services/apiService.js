@@ -27,7 +27,7 @@ const requestDicomData = async (studyInstanceUID, type) => {
       details: {
         study_instance_uid: studyInstanceUID,
         type,
-        error,
+        error: error.message,
       },
     });
     throw error;
