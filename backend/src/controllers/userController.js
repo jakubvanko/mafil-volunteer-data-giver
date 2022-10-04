@@ -1,5 +1,5 @@
 import UserModel from "../models/userModel.js";
-import Log from "../models/userModel.js";
+import Log from "../models/logModel.js";
 import mailService from "../services/mailService.js";
 
 const createUser = async (req, res) => {
@@ -94,6 +94,7 @@ const processDicomDataFromParam = (userParam) => async (req, res) => {
     user.email,
     user.name,
     user.visitDate,
+    user.expirationDate,
     user.generateLoginLink()
   );
   res.status(204).json();

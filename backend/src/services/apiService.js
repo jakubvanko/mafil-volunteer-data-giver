@@ -1,5 +1,5 @@
 import axios from "axios";
-import Log from "../models/userModel.js";
+import Log from "../models/logModel.js";
 
 const requestDicomData = async (studyInstanceUID, type) => {
   try {
@@ -30,7 +30,6 @@ const requestDicomData = async (studyInstanceUID, type) => {
         error: error.message,
       },
     });
-    throw error;
   }
 };
 

@@ -2,6 +2,7 @@ import createError from "http-errors";
 import Log from "../models/logModel.js";
 
 const errorHandler = (error, req, res, next) => {
+  if (process.env.NODE_ENV === "development") console.log(error);
   if (error.status === undefined) {
     error = createError(500);
     Log.createLog({

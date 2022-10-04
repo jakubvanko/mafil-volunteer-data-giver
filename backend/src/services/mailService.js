@@ -4,7 +4,7 @@ import url from "url";
 import path from "path";
 import handlebars from "handlebars";
 import mjml from "mjml";
-import Log from "../models/userModel.js";
+import Log from "../models/logModel.js";
 
 const getTemplatePath = (templateName) =>
   path.join(
@@ -66,7 +66,13 @@ const sendMail = async (to, subject, html) => {
   });
 };
 
-const sendLoginEmail = (emailAddress, name, visitDate, loginLink) =>
+const sendLoginEmail = (
+  emailAddress,
+  name,
+  visitDate,
+  expirationDate,
+  loginLink
+) =>
   sendMail(
     emailAddress,
     "Váš účet byl vytvořen",
@@ -75,6 +81,9 @@ const sendLoginEmail = (emailAddress, name, visitDate, loginLink) =>
         name,
         loginLink,
         visitDate: visitDate.toLocaleDateString("cs-CZ").replaceAll(" ", ""),
+        expirationDate: expirationDate
+          .toLocaleDateString("cs-CZ")
+          .replaceAll(" ", ""),
       })
     ).html
   );
