@@ -1,4 +1,5 @@
 import UserModel from "../models/userModel.js";
+import Log from "../models/userModel.js";
 import mailService from "../services/mailService.js";
 
 const createUser = async (req, res) => {
@@ -12,7 +13,16 @@ const createUser = async (req, res) => {
   });
   await user.save();
   await user.requestDicomData();
-  return res.status(201).json({ id: user._id });
+  res.status(201).json({ id: user._id });
+  return Log.createLog({
+    eventType: "SERVICE_REQUEST",
+    eventName: "ACCOUNT_CREATED",
+    message:
+      "A new volunteer account was created (but it is not activated yet)",
+    details: {
+      account_id: user._id,
+    },
+  });
 };
 
 const getUserFromParam = (param) => async (req, res) => {
@@ -20,27 +30,61 @@ const getUserFromParam = (param) => async (req, res) => {
     req.auth?.user?._id === req.params[param]
       ? req.auth.user
       : await UserModel.promiseFindById(req.params[param]);
-  return res.status(200).json({
+  res.status(200).json({
     id: user._id,
     expirationDate: user.expirationDate,
     visitDate: user.visitDate,
     dataSize: await user.getDataPackageSize(),
   });
+  return Log.createLog({
+    eventType:
+      req.auth?.user === undefined ? "SERVICE_REQUEST" : "USER_REQUEST",
+    eventName: "ACCOUNT_DETAILS_REQUESTED",
+    message: "Details of a volunteer account were requested",
+    details: {
+      account_id: user._id,
+    },
+  });
 };
 
 const deleteUserFromParam = (param) => async (req, res) => {
   await UserModel.promiseDeleteById(req.params[param]);
-  return res.status(204).json();
+  res.status(204).json();
+  return Log.createLog({
+    eventType:
+      req.auth?.user === undefined ? "SERVICE_REQUEST" : "USER_REQUEST",
+    eventName: "ACCOUNT_DELETED",
+    message: "A volunteer account was deleted",
+    details: {
+      account_id: req.params[param],
+    },
+  });
 };
 
 const generateUserToken = (req, res) => {
-  return res
+  res
     .status(200)
     .json({ id: req.auth.user._id, token: req.auth.user.generateUserToken() });
+  return Log.createLog({
+    eventType: "USER_REQUEST",
+    eventName: "ACCOUNT_LOGIN",
+    message: "A login to a volunteer account was performed",
+    details: {
+      account_id: req.auth.user._id,
+    },
+  });
 };
 
 const getUserData = (req, res) => {
-  return res.status(200).download(req.auth.user.dicomDataPath);
+  res.status(200).download(req.auth.user.dicomDataPath);
+  return Log.createLog({
+    eventType: "USER_REQUEST",
+    eventName: "ACCOUNT_DATA_DOWNLOADED",
+    message: "Download of volunteer's DICOM data was started",
+    details: {
+      account_id: req.auth.user._id,
+    },
+  });
 };
 
 const processDicomDataFromParam = (userParam) => async (req, res) => {
@@ -52,13 +96,30 @@ const processDicomDataFromParam = (userParam) => async (req, res) => {
     user.visitDate,
     user.generateLoginLink()
   );
-  return res.status(204).json();
+  res.status(204).json();
+  return Log.createLog({
+    eventType: "SERVICE_REQUEST",
+    eventName: "ACCOUNT_ACTIVATED",
+    message:
+      "A volunteer account data package was created and the account activated",
+    details: {
+      account_id: req.params[userParam],
+    },
+  });
 };
 
 const getUsersByStudyInstanceFromParam = (param) => async (req, res) => {
-  return res
+  res
     .status(200)
     .json(await UserModel.findByStudyInstanceUID(req.params[param]));
+  return Log.createLog({
+    eventType: "SERVICE_REQUEST",
+    eventName: "ACCOUNTS_BY_STUDY_INSTANCE_REQUESTED",
+    message: `Accounts related to a studyInstanceUID ${req.params[param]} were requested`,
+    details: {
+      study_instance_uid: req.params[param],
+    },
+  });
 };
 
 export default {

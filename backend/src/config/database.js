@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
+import Log from "../models/logModel.js";
 
-mongoose.connect(process.env.DATABASE_URI, {}, (err) => {
+mongoose.connect(process.env.DATABASE_URI, {}, async (err) => {
   if (err) throw err;
-  console.log("Connected to MongoDB...");
+  await Log.createLog({
+    eventType: "AUTOMATIC",
+    eventName: "DATABASE_CONNECTION_ESTABLISHED",
+    message: `Connected to MongoDB instance`,
+    details: {},
+  });
 });
