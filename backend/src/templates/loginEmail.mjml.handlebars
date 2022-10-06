@@ -19,6 +19,9 @@
     </mj-section>
     <mj-section background-color="white">
       <mj-column>
+        <mj-text align="center" font-size="14px" color="#888">
+          Scroll down for an English version.
+        </mj-text>
         <mj-text font-size="28px" font-weight="bold">
           Dobrý den
           {{name}}.
@@ -47,6 +50,37 @@
           {{visitDate}}.
         </mj-text>
         <mj-text><i>– Tým MAFIL</i></mj-text>
+        <mj-divider border-color="#1976d2" padding="40px 0"></mj-divider>
+        <mj-text font-size="28px" font-weight="bold">
+          Hello
+          {{name}}.
+        </mj-text>
+        <mj-text>
+          Thank you for taking part in a study of the MAFIL laboratory.
+          <br />
+          You can download your data using the following link:
+        </mj-text>
+        <mj-button
+          href="{{loginLink}}"
+          background-color="#1976d2"
+          border-radius="4px"
+          font-weight="bold"
+        >Click here to access your data</mj-button>
+        <mj-text>
+          Or visit this link:
+          <a style="color: #1976d2" href="{{loginLink}}">{{loginLink}}</a>
+        </mj-text>
+        <mj-text>
+          The images you can download are
+          <b>sensitive medical data</b>. To protect your privacy, we advise you
+          not to share this email with anyone.
+          <br />
+          The login link will expire on
+          <b>{{expirationDate}}</b>. The data is from the visit that took place
+          on
+          {{visitDate}}.
+        </mj-text>
+        <mj-text><i>– MAFIL team</i></mj-text>
       </mj-column>
     </mj-section>
     <mj-section>

@@ -75,7 +75,7 @@ const sendLoginEmail = (
 ) =>
   sendMail(
     emailAddress,
-    "Váš účet byl vytvořen",
+    "Stáhněte si svá data / Download your data",
     mjml(
       LOGIN_EMAIL_TEMPLATE({
         name,
