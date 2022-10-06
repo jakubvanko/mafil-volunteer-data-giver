@@ -9,8 +9,16 @@ RUN npm install
 
 RUN npm run build
 
-RUN npm install -g serve
 
-EXPOSE 3000
 
-CMD [ "serve", "-s", "build"]
+FROM caddy:2.6.1
+
+COPY --from=build /app/build ./
+
+COPY Caddyfile ./
+
+EXPOSE 80
+
+EXPOSE 443
+
+CMD [ "caddy", "run"]

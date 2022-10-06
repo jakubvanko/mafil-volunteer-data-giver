@@ -7,6 +7,7 @@ services:
       - 27017:27017
     volumes:
       - data:/data/db
+    restart: always
   backend:
     build: ./backend
     ports:
@@ -15,12 +16,17 @@ services:
       - archives:/usr/src/app/archives
     depends_on:
       - database
+    restart: always
     environment:
+      NODE_ENV: production
       DATABASE_URI: mongodb://database
+      PORT: 3001
   frontend:
     build: ./frontend
     ports:
-      - 3000:3000
+      - 80:80
+      - 443:443
+    restart: always
 
 volumes:
   data:
