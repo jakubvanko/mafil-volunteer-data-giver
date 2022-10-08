@@ -7,6 +7,7 @@ import util from "util";
 import archiver from "archiver";
 import { exec } from "child_process";
 import apiService from "../services/apiService.js";
+import mailService from "../services/mailService.js";
 
 const promiseExec = util.promisify(exec);
 
@@ -21,7 +22,7 @@ const userSchema = mongoose.Schema({
     match:
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
   },
-  secret: {
+  phoneNumber: {
     type: String,
     required: true,
   },
@@ -52,6 +53,9 @@ const userSchema = mongoose.Schema({
   dicomDataPath: {
     type: String,
     required: false,
+  },
+  secret: {
+    type: String, // If we needed to support secrets in the future
   },
 });
 
@@ -93,6 +97,19 @@ userSchema.statics.requestDataForUnactivatedAccounts = async function () {
     dicomDataPath: { $exists: false },
   }).exec()) {
     await user.requestDicomData();
+  }
+};
+
+userSchema.statics.remindUsers = async function () {
+  for (const user of await this.find({
+    expirationDate: {
+      $lte: new Date(
+        Date.now() + ms(process.env.REMINDER_TIME_BEFORE_EXPIRATION)
+      ),
+    },
+    shouldSendReminder: true,
+  }).exec()) {
+    await user.sendReminder();
   }
 };
 
@@ -150,6 +167,24 @@ userSchema.methods.createDataPackage = async function () {
   await fs.remove(folderToZip);
   this.dicomDataPath = userArchivePath;
   this.save();
+};
+
+userSchema.methods.sendReminder = async function () {
+  await mailService.sendLoginEmail(
+    this.email,
+    this.name,
+    this.visitDate,
+    this.expirationDate,
+    this.generateLoginLink(),
+    true
+  );
+  this.shouldSendReminder = false;
+  this.save();
+};
+
+userSchema.methods.validateSMSCode = async function (data) {
+  throw new Error("Not implemented");
+  return false;
 };
 
 export default mongoose.model("User", userSchema);

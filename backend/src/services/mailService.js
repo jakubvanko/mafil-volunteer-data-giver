@@ -71,7 +71,8 @@ const sendLoginEmail = (
   name,
   visitDate,
   expirationDate,
-  loginLink
+  loginLink,
+  isReminder = false
 ) =>
   sendMail(
     emailAddress,
@@ -84,6 +85,7 @@ const sendLoginEmail = (
         expirationDate: expirationDate
           .toLocaleDateString("cs-CZ")
           .replaceAll(" ", ""),
+        isReminder,
       })
     ).html
   );

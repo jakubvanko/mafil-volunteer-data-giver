@@ -72,3 +72,13 @@ setIntervalImmediately(async () => {
     },
   });
 }, ms("1d"));
+
+setIntervalImmediately(async () => {
+  await UserModel.remindUsers();
+  await Log.createLog({
+    eventType: "AUTOMATIC",
+    eventName: "REMINDERS_SENT",
+    message: `Reminded users whose account will soon expire`,
+    details: {},
+  });
+}, ms("1d"));
