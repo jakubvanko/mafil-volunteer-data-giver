@@ -62,6 +62,17 @@ const userSchema = mongoose.Schema({
   secretExpirationDate: {
     type: Date,
     required: false,
+    default: new Date(Date.now()),
+  },
+  secretTryAmount: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
+  leftSMSAmount: {
+    type: Number,
+    required: true,
+    default: process.env.SMS_MAX_AMOUNT,
   },
 });
 
@@ -74,6 +85,7 @@ userSchema.pre("save", async function () {
   this.secretExpirationDate = new Date(
     Date.now() + ms(process.env.SECRET_EXPIRATION)
   );
+  this.secretTryAmount = process.env.SECRET_TRY_AMOUNT;
 });
 
 userSchema.pre("save", async function () {
@@ -124,9 +136,19 @@ userSchema.statics.remindUsers = async function () {
 };
 
 userSchema.methods.validateSecret = async function (data) {
-  if (new Date(Date.now()) < this.secretExpirationDate) {
-    return bcrypt.compare(process.env.HASH_PEPPER + data, this.secret);
+  if (new Date(Date.now()) >= this.secretExpirationDate) {
+    return false;
   }
+  if (this.secretTryAmount <= 0) {
+    return false;
+  }
+  if (await bcrypt.compare(process.env.HASH_PEPPER + data, this.secret)) {
+    this.secretExpirationDate = new Date(Date.now());
+    await this.save();
+    return true;
+  }
+  this.secretTryAmount -= 1;
+  await this.save();
   return false;
 };
 
@@ -208,10 +230,18 @@ userSchema.methods.activateAccount = async function () {
 };
 
 userSchema.methods.sendLoginCode = async function () {
+  if (this.leftSMSAmount <= 0) {
+    return false;
+  }
+  if (new Date(Date.now()) < this.secretExpirationDate) {
+    return false;
+  }
   const generatedSecret = crypto.randomBytes(5).toString("hex").toUpperCase();
   this.secret = generatedSecret;
+  this.leftSMSAmount -= 1;
   await this.save();
   await apiService.sendSMS(this.phoneNumber, generatedSecret);
+  return true;
 };
 
 export default mongoose.model("User", userSchema);

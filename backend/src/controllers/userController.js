@@ -59,17 +59,44 @@ const deleteUserFromParam = (param) => async (req, res) => {
   });
 };
 
-const sendLoginCode = async (req, res) => {
-  await req.auth.user.sendLoginCode();
-  res.status(204).json();
+const getLoginDetails = async (req, res) => {
+  res.status(200).json({
+    leftSMSAmount: req.auth.user.leftSMSAmount,
+    secretExpirationDate: req.auth.user.secretExpirationDate,
+    secretTryAmount: req.auth.user.secretTryAmount,
+  });
   return Log.createLog({
     eventType: "USER_REQUEST",
-    eventName: "LOGIN_SECRET_REQUESTED",
-    message: "A login secret was created and sent to the volunteer",
+    eventName: "LOGIN_DETAILS_REQUESTED",
+    message: `Login details of an account were requested`,
     details: {
       account_id: req.auth.user._id,
     },
   });
+};
+
+const sendLoginCode = async (req, res) => {
+  if (await req.auth.user.sendLoginCode()) {
+    res.status(204).json();
+    return Log.createLog({
+      eventType: "USER_REQUEST",
+      eventName: "LOGIN_SECRET_REQUESTED",
+      message: "A login secret was created and sent to the volunteer",
+      details: {
+        account_id: req.auth.user._id,
+      },
+    });
+  } else {
+    res.status(429).json();
+    return Log.createLog({
+      eventType: "USER_REQUEST",
+      eventName: "LOGIN_SECRET_REQUEST_DENIED",
+      message: "A login secret creation was denied",
+      details: {
+        account_id: req.auth.user._id,
+      },
+    });
+  }
 };
 
 const generateUserToken = (req, res) => {
@@ -133,6 +160,7 @@ export default {
   createUser,
   getUserFromParam,
   deleteUserFromParam,
+  getLoginDetails,
   sendLoginCode,
   generateUserToken,
   getUserData,

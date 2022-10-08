@@ -13,6 +13,12 @@ router.get(
   userController.sendLoginCode
 );
 
+router.get(
+  "/secrets/details",
+  auth.check(auth.isValidEmailToken),
+  userController.getLoginDetails
+);
+
 router.post(
   "/tokens",
   auth.check(auth.isValidUserLogin),
