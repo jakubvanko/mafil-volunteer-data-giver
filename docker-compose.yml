@@ -21,6 +21,32 @@ services:
       NODE_ENV: production
       DATABASE_URI: mongodb://database
       PORT: 3001
+      RATE_LIMIT_WINDOW_TIME: 15m
+      RATE_LIMIT_WINDOW_ACTIONS: 150
+      LOG_ENTRY_EXPIRATION: 1y
+      SECRET_EXPIRATION: 1h
+      USER_TOKEN_EXPIRATION: 1d
+      EMAIL_TOKEN_EXPIRATION: 90d
+      REMINDER_TIME_BEFORE_EXPIRATION: 1w
+      SALT_WORK_FACTOR: 10
+      SECRET_TRY_AMOUNT: 5
+      SMS_MAX_AMOUNT: 50
+      HASH_PEPPER: "p3Pp3R"
+      MAIL_SENDER: '"Mafil Dobrovolnik" <mafil@ceitec.muni.cz>'
+      MAIL_HOST:
+      MAIL_PORT:
+      MAIL_USER:
+      MAIL_PASSWORD:
+      EMAIL_TOKEN_SECRET:
+      TOKEN_SECRET:
+      INCOMING_API_KEY:
+      OUTGOING_API_KEY:
+      TWILIO_ACCOUNT_SID:
+      TWILIO_AUTH_TOKEN:
+      TWILIO_PHONE_NUMBER:
+      LOGIN_URL:
+      PACS_API_URL:
+      LOG_API_URL:
   frontend:
     build: ./frontend
     ports:
