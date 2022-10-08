@@ -89,10 +89,12 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
     document.body.removeChild(form);
   };
 
-  const deleteAccount = () =>
-    axios.delete(`/users/${id}`, {
+  const deleteAccount = async () => {
+    await axios.delete(`/users/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    logout();
+  };
 
   const isEmailToken = (string: string) => {
     try {

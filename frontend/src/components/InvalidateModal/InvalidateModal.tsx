@@ -66,7 +66,7 @@ export const InvalidateModal = ({
                   }
                   onClick={() => {
                     userContext.deleteAccount();
-                    navigate("../../deleted");
+                    navigate("../../deleted", { replace: true });
                   }}
                 >
                   {t("user.buttonDisableUserText")}
