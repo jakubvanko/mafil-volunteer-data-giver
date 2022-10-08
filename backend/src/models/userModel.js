@@ -108,6 +108,7 @@ userSchema.statics.remindUsers = async function () {
       ),
     },
     shouldSendReminder: true,
+    dicomDataPath: { $exists: true },
   }).exec()) {
     await user.sendReminder();
   }
@@ -166,7 +167,7 @@ userSchema.methods.createDataPackage = async function () {
   await archive.finalize();
   await fs.remove(folderToZip);
   this.dicomDataPath = userArchivePath;
-  this.save();
+  await this.save();
 };
 
 userSchema.methods.sendReminder = async function () {
@@ -179,7 +180,7 @@ userSchema.methods.sendReminder = async function () {
     true
   );
   this.shouldSendReminder = false;
-  this.save();
+  await this.save();
 };
 
 userSchema.methods.validateSMSCode = async function (data) {

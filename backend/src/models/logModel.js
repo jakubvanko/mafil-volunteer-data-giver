@@ -40,6 +40,7 @@ logSchema.pre("save", async function () {
     );
   try {
     await this.dispatchToApi();
+    this.dispatched = true;
   } catch {}
 });
 
@@ -50,6 +51,8 @@ logSchema.statics.createLog = async function (logData) {
 logSchema.statics.dispatchAll = async function () {
   for (const log of await this.find({ dispatched: false }).exec()) {
     await log.dispatchToApi();
+    log.dispatched = true;
+    await log.save();
   }
 };
 
@@ -70,7 +73,6 @@ logSchema.methods.dispatchToApi = async function () {
     this.message,
     this.details
   );
-  this.dispatched = true;
 };
 
 export default mongoose.model("Log", logSchema);
