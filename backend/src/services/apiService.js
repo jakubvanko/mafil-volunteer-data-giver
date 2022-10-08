@@ -1,5 +1,11 @@
 import axios from "axios";
+import twilio from "twilio";
 import Log from "../models/logModel.js";
+
+const twilioClient = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
 const requestDicomData = async (studyInstanceUID, type) => {
   try {
@@ -35,7 +41,7 @@ const requestDicomData = async (studyInstanceUID, type) => {
 };
 
 const sendLogs = async (createdAt, eventType, eventName, message, details) => {
-  result = await axios.post(
+  await axios.post(
     process.env.LOG_API_URL,
     {
       application: "PVD",
@@ -47,10 +53,26 @@ const sendLogs = async (createdAt, eventType, eventName, message, details) => {
     },
     { headers: { Authorization: `Bearer ${process.env.OUTGOING_API_KEY}` } }
   );
-  return result;
+};
+
+const sendSMS = async (receiver, content) => {
+  await twilioClient.messages.create({
+    body: content,
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: receiver,
+  });
+  return Log.createLog({
+    eventType: "AUTOMATIC",
+    eventName: "SMS_SENT",
+    message: `SMS was sent to ${receiver}`,
+    details: {
+      receiver,
+    },
+  });
 };
 
 export default {
   requestDicomData,
   sendLogs,
+  sendSMS,
 };

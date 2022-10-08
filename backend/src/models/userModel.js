@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import fs from "fs-extra";
 import util from "util";
 import archiver from "archiver";
+import crypto from "crypto";
 import { exec } from "child_process";
 import apiService from "../services/apiService.js";
 import mailService from "../services/mailService.js";
@@ -55,7 +56,12 @@ const userSchema = mongoose.Schema({
     required: false,
   },
   secret: {
-    type: String, // If we needed to support secrets in the future
+    type: String,
+    required: false,
+  },
+  secretExpirationDate: {
+    type: Date,
+    required: false,
   },
 });
 
@@ -64,6 +70,9 @@ userSchema.pre("save", async function () {
   this.secret = await bcrypt.hash(
     process.env.HASH_PEPPER + this.secret,
     await bcrypt.genSalt(parseInt(process.env.SALT_WORK_FACTOR))
+  );
+  this.secretExpirationDate = new Date(
+    Date.now() + ms(process.env.SECRET_EXPIRATION)
   );
 });
 
@@ -115,7 +124,10 @@ userSchema.statics.remindUsers = async function () {
 };
 
 userSchema.methods.validateSecret = async function (data) {
-  return bcrypt.compare(process.env.HASH_PEPPER + data, this.secret);
+  if (new Date(Date.now()) < this.secretExpirationDate) {
+    return bcrypt.compare(process.env.HASH_PEPPER + data, this.secret);
+  }
+  return false;
 };
 
 userSchema.methods.generateUserToken = function () {
@@ -183,9 +195,23 @@ userSchema.methods.sendReminder = async function () {
   await this.save();
 };
 
-userSchema.methods.validateSMSCode = async function (data) {
-  throw new Error("Not implemented");
-  return false;
+userSchema.methods.activateAccount = async function () {
+  await this.createDataPackage();
+  await mailService.sendLoginEmail(
+    this.email,
+    this.name,
+    this.visitDate,
+    this.expirationDate,
+    this.generateLoginLink(),
+    false
+  );
+};
+
+userSchema.methods.sendLoginCode = async function () {
+  const generatedSecret = crypto.randomBytes(5).toString("hex").toUpperCase();
+  this.secret = generatedSecret;
+  await this.save();
+  await apiService.sendSMS(this.phoneNumber, generatedSecret);
 };
 
 export default mongoose.model("User", userSchema);

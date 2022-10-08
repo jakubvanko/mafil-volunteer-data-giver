@@ -1,12 +1,11 @@
 import UserModel from "../models/userModel.js";
 import Log from "../models/logModel.js";
-import mailService from "../services/mailService.js";
 
 const createUser = async (req, res) => {
   const user = new UserModel({
     name: req.body.name,
     email: req.body.email,
-    secret: req.body.secret,
+    phoneNumber: req.body.phoneNumber,
     visitDate: req.body.visitDate,
     studyInstanceUID: req.body.studyInstanceUID,
     dicomDataType: req.body.dicomDataType,
@@ -60,6 +59,19 @@ const deleteUserFromParam = (param) => async (req, res) => {
   });
 };
 
+const sendLoginCode = async (req, res) => {
+  await req.auth.user.sendLoginCode();
+  res.status(204).json();
+  return Log.createLog({
+    eventType: "USER_REQUEST",
+    eventName: "LOGIN_SECRET_REQUESTED",
+    message: "A login secret was created and sent to the volunteer",
+    details: {
+      account_id: req.auth.user._id,
+    },
+  });
+};
+
 const generateUserToken = (req, res) => {
   res
     .status(200)
@@ -90,14 +102,7 @@ const getUserData = async (req, res) => {
 
 const processDicomDataFromParam = (userParam) => async (req, res) => {
   const user = await UserModel.promiseFindById(req.params[userParam]);
-  await user.createDataPackage();
-  mailService.sendLoginEmail(
-    user.email,
-    user.name,
-    user.visitDate,
-    user.expirationDate,
-    user.generateLoginLink()
-  );
+  await user.activateAccount();
   res.status(204).json();
   return Log.createLog({
     eventType: "SERVICE_REQUEST",
@@ -128,6 +133,7 @@ export default {
   createUser,
   getUserFromParam,
   deleteUserFromParam,
+  sendLoginCode,
   generateUserToken,
   getUserData,
   processDicomDataFromParam,

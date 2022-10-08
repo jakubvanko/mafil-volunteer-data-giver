@@ -19,6 +19,11 @@ const isUserFromParam = (param) => async (req) => {
   return req.params[param] === req.auth.user._id.toString();
 };
 
+const isValidEmailToken = async (req) => {
+  await getUserFromToken(req, process.env.EMAIL_TOKEN_SECRET);
+  return true;
+};
+
 const isValidUserLogin = async (req) => {
   await getUserFromToken(req, process.env.EMAIL_TOKEN_SECRET);
   return await req.auth.user.validateSecret(req.body.secret);
@@ -51,5 +56,6 @@ export default {
   check,
   isAdmin,
   isUserFromParam,
+  isValidEmailToken,
   isValidUserLogin,
 };

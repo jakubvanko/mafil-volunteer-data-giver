@@ -7,6 +7,12 @@ const router = express.Router();
 
 router.post("/", auth.check(auth.isAdmin), userController.createUser);
 
+router.get(
+  "/secrets",
+  auth.check(auth.isValidEmailToken),
+  userController.sendLoginCode
+);
+
 router.post(
   "/tokens",
   auth.check(auth.isValidUserLogin),
