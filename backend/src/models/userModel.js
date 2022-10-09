@@ -240,7 +240,10 @@ userSchema.methods.sendLoginCode = async function () {
   this.secret = generatedSecret;
   this.leftSMSAmount -= 1;
   await this.save();
-  await apiService.sendSMS(this.phoneNumber, generatedSecret);
+  await apiService.sendSMS(
+    this.phoneNumber,
+    `Váš MAFIL kód je: ${generatedSecret}`
+  );
   return true;
 };
 
