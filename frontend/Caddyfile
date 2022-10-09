@@ -1,4 +1,4 @@
-localhost {
+{$SITE_ADDRESS} {
     handle /api/* {
         reverse_proxy backend:3001
     }

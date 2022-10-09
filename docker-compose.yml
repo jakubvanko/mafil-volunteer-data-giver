@@ -55,6 +55,7 @@ services:
     restart: always
     environment:
       REACT_APP_API_URL: https://localhost/api
+      SITE_ADDRESS: localhost
 
 volumes:
   data:
