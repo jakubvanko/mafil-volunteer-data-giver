@@ -21,7 +21,12 @@ interface UserContextObject {
   downloadData: () => void;
   isEmailToken: (string: string) => boolean;
   deleteAccount: () => Promise<any>;
+  requestSMSCode: (emailToken: string) => Promise<any>;
+  reloadLoginDetails: (emailToken: string) => Promise<any>;
   isReloadPending: boolean;
+  leftSMSAmount?: number;
+  secretExpirationDate?: Date;
+  secretTryAmount?: number;
 }
 
 const UserContext = createContext<UserContextObject>({
@@ -30,6 +35,8 @@ const UserContext = createContext<UserContextObject>({
   downloadData: () => {},
   isEmailToken: () => false,
   deleteAccount: () => Promise.resolve(),
+  requestSMSCode: () => Promise.resolve(),
+  reloadLoginDetails: () => Promise.resolve(),
   isReloadPending: false,
 });
 
@@ -42,6 +49,9 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
   const [visitDate, setVisitDate] = useState<Date>();
   const [dataSize, setDataSize] = useState<number>();
   const [isReloadPending, setReloadPending] = useState<boolean>(true);
+  const [leftSMSAmount, setLeftSMSAmount] = useState<number>();
+  const [secretExpirationDate, setSecretExpirationDate] = useState<Date>();
+  const [secretTryAmount, setSecretTryAmount] = useState<number>();
 
   const reloadUserDetails = async (token: string, id: string) => {
     const { expirationDate, visitDate, dataSize } = (
@@ -52,6 +62,17 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
     setExpirationDate(new Date(Date.parse(expirationDate)));
     setVisitDate(new Date(Date.parse(visitDate)));
     setDataSize(dataSize);
+  };
+
+  const reloadLoginDetails = async (emailToken: string) => {
+    const { leftSMSAmount, secretExpirationDate, secretTryAmount } = (
+      await axios.get(`/users/secrets/details`, {
+        headers: { Authorization: `Bearer ${emailToken}` },
+      })
+    ).data;
+    setLeftSMSAmount(leftSMSAmount);
+    setSecretExpirationDate(new Date(Date.parse(secretExpirationDate)));
+    setSecretTryAmount(secretTryAmount);
   };
 
   const login = async (emailToken: string, secret: string) => {
@@ -104,6 +125,18 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const requestSMSCode = async (emailToken: string) => {
+    try {
+      await axios.get(`/users/secrets`, {
+        headers: { Authorization: `Bearer ${emailToken}` },
+      });
+    } catch (error) {
+      throw error;
+    } finally {
+      await reloadLoginDetails(emailToken);
+    }
+  };
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const id = sessionStorage.getItem("id");
@@ -128,7 +161,12 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
         downloadData,
         deleteAccount,
         isEmailToken,
+        requestSMSCode,
+        reloadLoginDetails,
         isReloadPending,
+        leftSMSAmount,
+        secretExpirationDate,
+        secretTryAmount,
       }}
     >
       {children}

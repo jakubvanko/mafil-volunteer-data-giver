@@ -6,10 +6,16 @@ const translationEn = {
   login: {
     headingText: "Access your data",
     description:
-      "To access your data, please enter your social security number.",
-    textFieldLabel: "Social security number",
+      "To access your data, please enter the code we just sent to your phone number.",
+    smsCommentaryValid:
+      "<bold>The code is valid until {{codeValidityDate}}</bold>. You have <bold>{{codeTryAmount}} more tries</bold> to enter it correctly.",
+    smsCommentaryInvalid:
+      "<bold>The code from your SMS is no longer valid</bold>. Please <bold>wait until {{codeValidityDate}}</bold> and then <bold>refresh</bold> this page.",
+    textFieldLabel: "SMS Code",
     buttonText: "Log in",
     invalidSecret: "Failed to log in. Please try again.",
+    smsError:
+      "An error occurred while sending the SMS. Please try again later.",
   },
   common: {
     buttonOutLinkText: "Go to the website of the MAFIL laboratory",
@@ -61,10 +67,16 @@ const translationEn = {
 const translationCz = {
   login: {
     headingText: "Přístup k vašim datům",
-    description: "Pro přístup k vašim datům zadejte prosím své rodné číslo.",
-    textFieldLabel: "Rodné číslo",
+    description:
+      "Pro přístup k datům zadejte kód který jsme právě odeslali na váš telefon.",
+    smsCommentaryValid:
+      "<bold>Kód je platný do {{codeValidityDate}}</bold>. O jeho správné zadání se můžete pokusit <bold>ještě {{codeTryAmount}} krát</bold>.",
+    smsCommentaryInvalid:
+      "<bold>Kód z vaší SMS už je neplatný</bold>. Prosím <bold>počkejte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> tuto stránku.",
+    textFieldLabel: "Kód z SMS",
     buttonText: "Přihlásit se",
     invalidSecret: "Přihlášení se nezdařilo. Zkuste to prosím znovu.",
+    smsError: "Nastala chyba při posílání SMS. Zkuste to prosím později.",
   },
   common: {
     buttonOutLinkText: "Přejít na webstránku laboratoře MAFIL",
@@ -116,10 +128,16 @@ const translationCz = {
 const translationSk = {
   login: {
     headingText: "Prístup k vašim dátam",
-    description: "Pre prístup k vašim dátam prosím zadajte svoje rodné číslo.",
-    textFieldLabel: "Rodné číslo",
+    description:
+      "Pre prístup k dátam zadajte kód ktorý sme práve odoslali na váš telefón.",
+    smsCommentaryValid:
+      "<bold>Kód je platný do {{codeValidityDate}}</bold>. O jeho správne zadanie sa môžete pokúsiť <bold>ešte {{codeTryAmount}} krát</bold>.",
+    smsCommentaryInvalid:
+      "<bold>Kód z vašej SMS už je neplatný</bold>. Prosím <bold>počkajte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> túto stránku.",
+    textFieldLabel: "Kód z SMS",
     buttonText: "Prihlásiť sa",
     invalidSecret: "Prihlásenie zlyhalo. Skúste to znova.",
+    smsError: "Nastala chyba pri posielaní SMS. Skúste to prosím neskôr.",
   },
   common: {
     buttonOutLinkText: "Prejsť na webstránku laboratória MAFIL",

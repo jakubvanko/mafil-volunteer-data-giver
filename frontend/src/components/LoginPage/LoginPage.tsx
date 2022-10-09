@@ -1,7 +1,7 @@
 import { Typography, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { MainCard } from "../MainCard/MainCard";
 import { MainPageContainer } from "../MainPageContainer/MainPageContainer";
@@ -14,13 +14,21 @@ export const LoginPage = () => {
   const [secret, setSecret] = useState<string>("");
   const [isLoginLoading, setLoginLoading] = useState<boolean>(false);
   const [isLoginError, setLoginError] = useState<boolean>(false);
+  const [isSMSError, setSMSError] = useState<boolean>(false);
   const userContext = useUserContext();
 
   useEffect(() => {
     if (emailToken === undefined || !userContext.isEmailToken(emailToken!)) {
-      navigate("../../error");
+      navigate("../../error", { replace: true });
+      return;
     }
-  }, [emailToken, userContext, navigate]);
+    userContext
+      .requestSMSCode(emailToken)
+      .then(() => {
+        setSMSError(false);
+      })
+      .catch(() => setSMSError(true));
+  }, [emailToken]);
 
   return (
     <form
@@ -31,6 +39,7 @@ export const LoginPage = () => {
           await userContext.login(emailToken!, secret);
           navigate("../../user", { replace: true });
         } catch {
+          await userContext.reloadLoginDetails(emailToken!);
           setLoginError(true);
           setSecret("");
         }
@@ -39,7 +48,30 @@ export const LoginPage = () => {
     >
       <MainPageContainer>
         <MainCard headingText={t("login.headingText")}>
-          <Typography variant="body1">{t("login.description")}</Typography>
+          <Typography variant="body1">
+            {t("login.description")}
+            <br />
+            {userContext.secretTryAmount !== undefined && (
+              <Trans
+                values={{
+                  codeValidityDate:
+                    userContext.secretExpirationDate &&
+                    userContext.secretExpirationDate
+                      .toLocaleTimeString("cs-CZ")
+                      .replaceAll(" ", ""),
+                  codeTryAmount: userContext.secretTryAmount,
+                }}
+                components={{
+                  bold: <b />,
+                }}
+                i18nKey={
+                  userContext!.secretTryAmount > 0
+                    ? "login.smsCommentaryValid"
+                    : "login.smsCommentaryInvalid"
+                }
+              />
+            )}
+          </Typography>
           <TextField
             id="textfield-code"
             label={t("login.textFieldLabel")}
@@ -47,8 +79,21 @@ export const LoginPage = () => {
             fullWidth
             value={secret}
             onChange={(event) => setSecret(event.target.value)}
-            error={isLoginError}
-            helperText={isLoginError && t("login.invalidSecret")}
+            error={
+              isLoginError ||
+              (isSMSError &&
+                (userContext.secretTryAmount === undefined ||
+                  userContext.secretTryAmount <= 0))
+            }
+            helperText={
+              isLoginError
+                ? t("login.invalidSecret")
+                : isSMSError &&
+                  (userContext.secretTryAmount === undefined ||
+                    userContext.secretTryAmount <= 0)
+                ? t("login.smsError")
+                : ""
+            }
           />
           <LoadingButton
             fullWidth
