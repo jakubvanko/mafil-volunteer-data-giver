@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 
-axios.defaults.baseURL = "http://localhost:3001/api/";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 interface UserContextObject {
   token?: string;

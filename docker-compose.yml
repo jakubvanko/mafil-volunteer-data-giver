@@ -53,6 +53,8 @@ services:
       - 80:80
       - 443:443
     restart: always
+    environment:
+      - REACT_APP_API_URL: https://localhost/api
 
 volumes:
   data:
