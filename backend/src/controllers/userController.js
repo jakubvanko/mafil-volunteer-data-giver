@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
     message:
       "A new volunteer account was created (but it is not activated yet)",
     details: {
-      account_id: user._id,
+      account_id: user._id.toString(),
     },
   });
 };
