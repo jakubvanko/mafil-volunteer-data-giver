@@ -236,7 +236,10 @@ userSchema.methods.sendLoginCode = async function () {
   if (new Date(Date.now()) < this.secretExpirationDate) {
     return false;
   }
-  const generatedSecret = crypto.randomBytes(5).toString("hex").toUpperCase();
+  const generatedSecret = crypto
+    .randomBytes(process.env.SECRET_BYTE_SIZE)
+    .toString("hex")
+    .toUpperCase();
   this.secret = generatedSecret;
   this.leftSMSAmount -= 1;
   await this.save();
