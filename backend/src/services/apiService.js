@@ -1,11 +1,5 @@
 import axios from "axios";
-import twilio from "twilio";
 import Log from "../models/logModel.js";
-
-const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
 
 const requestDicomData = async (studyInstanceUID, type) => {
   try {
@@ -56,10 +50,12 @@ const sendLogs = async (createdAt, eventType, eventName, message, details) => {
 };
 
 const sendSMS = async (receiver, content) => {
-  await twilioClient.messages.create({
-    body: content,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    to: receiver,
+  await axios.post("https://www.odorik.cz/api/v1/sms", {
+    recipient: receiver,
+    message: content,
+    user: process.env.ODORIK_USER,
+    password: process.env.ODORIK_PASSWORD,
+    sender: "smsinfo",
   });
   return Log.createLog({
     eventType: "AUTOMATIC",
