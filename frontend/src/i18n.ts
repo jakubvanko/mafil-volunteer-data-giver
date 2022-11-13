@@ -13,6 +13,7 @@ const translationEn = {
       "<bold>The code from your SMS is no longer valid</bold>. Please <bold>wait until {{codeValidityDate}}</bold> and then <bold>refresh</bold> this page.",
     textFieldLabel: "SMS Code",
     buttonText: "Log in",
+    buttonRefreshText: "Refresh this page",
     invalidSecret: "Failed to log in. Please try again.",
     smsError:
       "An error occurred while sending the SMS. Please try again later.",
@@ -75,6 +76,7 @@ const translationCz = {
       "<bold>Kód z vaší SMS už je neplatný</bold>. Prosím <bold>počkejte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> tuto stránku.",
     textFieldLabel: "Kód z SMS",
     buttonText: "Přihlásit se",
+    buttonRefreshText: "Obnovit stránku",
     invalidSecret: "Přihlášení se nezdařilo. Zkuste to prosím znovu.",
     smsError: "Nastala chyba při posílání SMS. Zkuste to prosím později.",
   },
@@ -136,6 +138,7 @@ const translationSk = {
       "<bold>Kód z vašej SMS už je neplatný</bold>. Prosím <bold>počkajte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> túto stránku.",
     textFieldLabel: "Kód z SMS",
     buttonText: "Prihlásiť sa",
+    buttonRefreshText: "Obnoviť stránku",
     invalidSecret: "Prihlásenie zlyhalo. Skúste to znova.",
     smsError: "Nastala chyba pri posielaní SMS. Skúste to prosím neskôr.",
   },

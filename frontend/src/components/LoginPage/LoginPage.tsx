@@ -49,8 +49,10 @@ export const LoginPage = () => {
       <MainPageContainer>
         <MainCard headingText={t("login.headingText")}>
           <Typography variant="body1">
-            {t("login.description")}
-            <br />
+            {userContext.secretTryAmount === undefined ||
+              (userContext!.secretTryAmount > 0 && t("login.description"))}
+            {userContext.secretTryAmount === undefined ||
+              (userContext!.secretTryAmount > 0 && <br />)}
             {userContext.secretTryAmount !== undefined && (
               <Trans
                 values={{
@@ -72,37 +74,51 @@ export const LoginPage = () => {
               />
             )}
           </Typography>
-          <TextField
-            id="textfield-code"
-            label={t("login.textFieldLabel")}
-            variant="filled"
-            fullWidth
-            value={secret}
-            onChange={(event) => setSecret(event.target.value)}
-            error={
-              isLoginError ||
-              (isSMSError &&
-                (userContext.secretTryAmount === undefined ||
-                  userContext.secretTryAmount <= 0))
-            }
-            helperText={
-              isLoginError
-                ? t("login.invalidSecret")
-                : isSMSError &&
-                  (userContext.secretTryAmount === undefined ||
-                    userContext.secretTryAmount <= 0)
-                ? t("login.smsError")
-                : ""
-            }
-          />
-          <LoadingButton
-            fullWidth
-            variant="contained"
-            loading={isLoginLoading}
-            type="submit"
-          >
-            {t("login.buttonText")}
-          </LoadingButton>
+          {userContext.secretTryAmount === undefined ||
+            (userContext!.secretTryAmount > 0 && (
+              <TextField
+                id="textfield-code"
+                label={t("login.textFieldLabel")}
+                variant="filled"
+                fullWidth
+                value={secret}
+                onChange={(event) => setSecret(event.target.value)}
+                error={
+                  isLoginError ||
+                  (isSMSError &&
+                    (userContext.secretTryAmount === undefined ||
+                      userContext.secretTryAmount <= 0))
+                }
+                helperText={
+                  isLoginError
+                    ? t("login.invalidSecret")
+                    : isSMSError &&
+                      (userContext.secretTryAmount === undefined ||
+                        userContext.secretTryAmount <= 0)
+                    ? t("login.smsError")
+                    : ""
+                }
+              />
+            ))}
+          {userContext.secretTryAmount !== undefined &&
+          userContext!.secretTryAmount <= 0 ? (
+            <LoadingButton
+              fullWidth
+              variant="contained"
+              onClick={() => window.location.reload()}
+            >
+              {t("login.buttonRefreshText")}
+            </LoadingButton>
+          ) : (
+            <LoadingButton
+              fullWidth
+              variant="contained"
+              loading={isLoginLoading}
+              type="submit"
+            >
+              {t("login.buttonText")}
+            </LoadingButton>
+          )}
         </MainCard>
       </MainPageContainer>
     </form>
