@@ -9,8 +9,8 @@ This application was created for [the MAFIL laboratory](https://mafil.ceitec.cz/
 ## Installation Tutorial
 
 1. Install Docker
-2. Fill out the required env variables in `docker-compose.yml`
-   - [Twilio](https://www.twilio.com/) credentials are needed for sending SMS messages
+2. Fill out the required env variables in `docker-compose.yml` (for frontend as well as backend!)
+   - [Odorik](https://www.odorik.cz/w/api:sms) credentials are needed for sending SMS messages
    - Mail credentials are needed for sending emails
    - INCOMING_API_KEY and OUTGOING_API_KEY are used for communication with other MAFIL microservices
    - PACS_API_URL and LOG_API_URL represent endpoints of MAFIL microservices that are used by this application (application fails gracefully if they are not provided)

@@ -21,32 +21,32 @@ services:
       NODE_ENV: production
       DATABASE_URI: mongodb://database
       PORT: 3001
-      RATE_LIMIT_WINDOW_TIME: 15m
-      RATE_LIMIT_WINDOW_ACTIONS: 150
+      RATE_LIMIT_WINDOW_ACTIONS: 150 # How many actions from one IP in one window
+      # Specify the following time periods using https://www.npmjs.com/package/ms syntax
+      RATE_LIMIT_WINDOW_TIME: 15m # How long one window lasts
       LOG_ENTRY_EXPIRATION: 1y
-      SECRET_EXPIRATION: 1h
+      SECRET_EXPIRATION: 1h # How long SMS code lasts
       USER_TOKEN_EXPIRATION: 1d
-      EMAIL_TOKEN_EXPIRATION: 90d
+      EMAIL_TOKEN_EXPIRATION: 90d # How long until login link expires
       REMINDER_TIME_BEFORE_EXPIRATION: 1w
-      SALT_WORK_FACTOR: 10
-      SECRET_TRY_AMOUNT: 5
+      SALT_WORK_FACTOR: 10 # Set higher number for better password security
+      SECRET_TRY_AMOUNT: 5 # How many tries to submit an SMS code before a new one is needed
       SMS_MAX_AMOUNT: 50
-      HASH_PEPPER: "p3Pp3R"
+      HASH_PEPPER: "p3Pp3R" # Set another secret string for better password security
       MAIL_SENDER: '"Mafil Dobrovolnik" <mafil@ceitec.muni.cz>'
       MAIL_HOST:
       MAIL_PORT:
       MAIL_USER:
       MAIL_PASSWORD:
-      EMAIL_TOKEN_SECRET:
-      TOKEN_SECRET:
-      INCOMING_API_KEY:
-      OUTGOING_API_KEY:
-      TWILIO_ACCOUNT_SID:
-      TWILIO_AUTH_TOKEN:
-      TWILIO_PHONE_NUMBER:
-      LOGIN_URL:
-      PACS_API_URL:
-      LOG_API_URL:
+      EMAIL_TOKEN_SECRET: # Set an alphanumeric string (suggested length at least 12 chars)
+      TOKEN_SECRET: # Set an alphanumeric string (suggested length at least 12 chars)
+      INCOMING_API_KEY: # Set an alphanumeric string (suggested length at least 12 chars)
+      OUTGOING_API_KEY: # Set an alphanumeric string (suggested length at least 12 chars)
+      ODORIK_USER:
+      ODORIK_PASSWORD:
+      LOGIN_URL: # Login URL for login links in emails (for example dobrovolnik.mafil.cz/login/)
+      PACS_API_URL: # PACS-API url for requesting images (for example pacs.mafil.cz/api/images - depends on the endpoint)
+      LOG_API_URL: # API url for logging imporant actions (for example logger.mafil.cz/api/log - depends on the endpoint)
   frontend:
     build: ./frontend
     ports:
@@ -54,8 +54,8 @@ services:
       - 443:443
     restart: always
     environment:
-      REACT_APP_API_URL: https://localhost/api
-      SITE_ADDRESS: localhost
+      REACT_APP_API_URL: https://localhost/api # Url of the backend API (such as https://dobrovolnik.mafil.cz/api)
+      SITE_ADDRESS: localhost # Adress of the backend API (such as dobrovolnik.mafil.cz)
 
 volumes:
   data:
