@@ -237,7 +237,7 @@ userSchema.methods.sendLoginCode = async function () {
     return false;
   }
   const generatedSecret = crypto
-    .randomBytes(process.env.SECRET_BYTE_SIZE)
+    .randomBytes(parseInt(process.env.SECRET_BYTE_SIZE))
     .toString("hex")
     .toUpperCase();
   this.secret = generatedSecret;
