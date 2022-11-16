@@ -40,7 +40,7 @@ const getUserFromParam = (param) => async (req, res) => {
     eventName: "ACCOUNT_DETAILS_REQUESTED",
     message: "Details of a volunteer account were requested",
     details: {
-      account_id: user._id,
+      account_id: user._id.toString(),
     },
   });
 };
@@ -70,7 +70,7 @@ const getLoginDetails = async (req, res) => {
     eventName: "LOGIN_DETAILS_REQUESTED",
     message: `Login details of an account were requested`,
     details: {
-      account_id: req.auth.user._id,
+      account_id: req.auth.user._id.toString(),
     },
   });
 };
@@ -83,7 +83,7 @@ const sendLoginCode = async (req, res) => {
       eventName: "LOGIN_SECRET_REQUESTED",
       message: "A login secret was created and sent to the volunteer",
       details: {
-        account_id: req.auth.user._id,
+        account_id: req.auth.user._id.toString(),
       },
     });
   } else {
@@ -93,7 +93,7 @@ const sendLoginCode = async (req, res) => {
       eventName: "LOGIN_SECRET_REQUEST_DENIED",
       message: "A login secret creation was denied",
       details: {
-        account_id: req.auth.user._id,
+        account_id: req.auth.user._id.toString(),
       },
     });
   }
@@ -108,7 +108,7 @@ const generateUserToken = (req, res) => {
     eventName: "ACCOUNT_LOGIN",
     message: "A login to a volunteer account was performed",
     details: {
-      account_id: req.auth.user._id,
+      account_id: req.auth.user._id.toString(),
     },
   });
 };
@@ -122,7 +122,7 @@ const getUserData = async (req, res) => {
     eventName: "ACCOUNT_DATA_DOWNLOADED",
     message: "Download of volunteer's DICOM data was started",
     details: {
-      account_id: req.auth.user._id,
+      account_id: req.auth.user._id.toString(),
     },
   });
 };
