@@ -26,6 +26,7 @@ const userSchema = mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
+    match: /\+\d+/,
   },
   visitDate: {
     type: Date,
