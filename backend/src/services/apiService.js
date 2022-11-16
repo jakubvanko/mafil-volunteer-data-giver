@@ -50,13 +50,18 @@ const sendLogs = async (createdAt, eventType, eventName, message, details) => {
 };
 
 const sendSMS = async (receiver, content) => {
-  await axios.post("https://www.odorik.cz/api/v1/sms", {
-    recipient: receiver,
-    message: content,
-    user: process.env.ODORIK_USER,
-    password: process.env.ODORIK_PASSWORD,
-    sender: "smsinfo",
+  let result = await axios.post("https://www.odorik.cz/api/v1/sms", null, {
+    params: {
+      recipient: receiver.replace("+", "00"),
+      message: content,
+      user: process.env.ODORIK_USER,
+      password: process.env.ODORIK_PASSWORD,
+    },
   });
+  if (result.data.includes("error")) {
+    // because odorik does not send proper API error codes
+    throw new Error("Error while sending an SMS");
+  }
   return Log.createLog({
     eventType: "AUTOMATIC",
     eventName: "SMS_SENT",
