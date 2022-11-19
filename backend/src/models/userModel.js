@@ -246,7 +246,7 @@ userSchema.methods.sendLoginCode = async function () {
   await this.save();
   await apiService.sendSMS(
     this.phoneNumber,
-    `Váš MAFIL kód je: ${generatedSecret}\nYour MAFIL code is ${generatedSecret}`
+    `Váš MAFIL kód je: ${generatedSecret}\nYour MAFIL code is: ${generatedSecret}`
   );
   return true;
 };
