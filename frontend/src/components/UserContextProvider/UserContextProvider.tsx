@@ -99,6 +99,11 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
     setDataSize(undefined);
   };
 
+  /* The followning function is inspired by Joren Van Severen.
+   *
+   * JOREN VAN SEVEREN. How to handle file downloads with JWT based authentication?
+   * [StackOverflow answer (https://stackoverflow.com/a/66078703)]. 2021.
+   */
   const downloadData = () => {
     const form = document.createElement("form");
     form.method = "post";
