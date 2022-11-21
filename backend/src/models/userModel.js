@@ -96,12 +96,18 @@ userSchema.pre("save", async function () {
   } catch {}
 });
 
+userSchema.pre("deleteMany", async function () {
+  for (const deletedUser of await this.model.find(this._conditions).exec()) {
+    await deletedUser.deleteArchive();
+  }
+});
+
 userSchema.statics.promiseFindById = function (id) {
   return this.findById(id).exec();
 };
 
 userSchema.statics.promiseDeleteById = function (id) {
-  return this.findByIdAndDelete(id).exec();
+  return this.deleteMany({ _id: id }).exec(); // uses deleteMany because of a deleteMany hook!
 };
 
 userSchema.statics.findByStudyInstanceUID = function (studyInstanceUID) {
@@ -181,6 +187,7 @@ userSchema.methods.requestDicomData = async function () {
 };
 
 userSchema.methods.createDataPackage = async function () {
+  await this.deleteArchive(); // if archive already exists for some reason
   const folderToZip = `tmp/${this._id}`;
   const archiveStoragePath = "./archives/";
   const userArchivePath = `${archiveStoragePath}${this.name.replace(
@@ -249,6 +256,12 @@ userSchema.methods.sendLoginCode = async function () {
     `Váš MAFIL kód je: ${generatedSecret}\nYour MAFIL code is: ${generatedSecret}`
   );
   return true;
+};
+
+userSchema.methods.deleteArchive = async function () {
+  await fs.remove(this.dicomDataPath);
+  this.dicomDataPath = undefined;
+  await this.save();
 };
 
 export default mongoose.model("User", userSchema);
