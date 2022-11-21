@@ -259,9 +259,11 @@ userSchema.methods.sendLoginCode = async function () {
 };
 
 userSchema.methods.deleteArchive = async function () {
-  await fs.remove(this.dicomDataPath);
-  this.dicomDataPath = undefined;
-  await this.save();
+  if (this.dicomDataPath !== undefined) {
+    await fs.remove(this.dicomDataPath);
+    this.dicomDataPath = undefined;
+    await this.save();
+  }
 };
 
 export default mongoose.model("User", userSchema);
