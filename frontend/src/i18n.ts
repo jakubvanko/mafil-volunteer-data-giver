@@ -69,11 +69,11 @@ const translationCz = {
   login: {
     headingText: "Přístup k vašim datům",
     description:
-      "Pro přístup k datům zadejte kód který jsme právě odeslali na váš telefon.",
+      "Pro přístup k datům zadejte kód, který jsme právě odeslali na váš telefon.",
     smsCommentaryValid:
       "<bold>Kód je platný do {{codeValidityDate}}</bold>. O jeho správné zadání se můžete pokusit <bold>ještě {{codeTryAmount}} krát</bold>.",
     smsCommentaryInvalid:
-      "<bold>Kód z vaší SMS už je neplatný</bold>. Prosím <bold>počkejte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> tuto stránku.",
+      "<bold>Kód z vaší SMS už je neplatný</bold>. Prosím, <bold>počkejte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> tuto stránku.",
     textFieldLabel: "Kód z SMS",
     buttonText: "Přihlásit se",
     buttonRefreshText: "Obnovit stránku",
@@ -111,7 +111,7 @@ const translationCz = {
   logout: {
     headingText: "Byli jste odhlášeni",
     descriptionText:
-      "Byli jste úspěšně odhlášeni. Nyní můžete webovou stránku bezpečně opustit.",
+      "Byl(a) jste úspěšně odhlášen(a). Nyní můžete webovou stránku bezpečně opustit.",
   },
   invalidate: {
     headingText: "Zneplatnit přihlašovací odkaz",
@@ -131,11 +131,11 @@ const translationSk = {
   login: {
     headingText: "Prístup k vašim dátam",
     description:
-      "Pre prístup k dátam zadajte kód ktorý sme práve odoslali na váš telefón.",
+      "Pre prístup k dátam zadajte kód, ktorý sme práve odoslali na váš telefón.",
     smsCommentaryValid:
       "<bold>Kód je platný do {{codeValidityDate}}</bold>. O jeho správne zadanie sa môžete pokúsiť <bold>ešte {{codeTryAmount}} krát</bold>.",
     smsCommentaryInvalid:
-      "<bold>Kód z vašej SMS už je neplatný</bold>. Prosím <bold>počkajte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> túto stránku.",
+      "<bold>Kód z vašej SMS už je neplatný</bold>. Prosím, <bold>počkajte do {{codeValidityDate}}</bold> a potom <bold>obnovte</bold> túto stránku.",
     textFieldLabel: "Kód z SMS",
     buttonText: "Prihlásiť sa",
     buttonRefreshText: "Obnoviť stránku",
@@ -173,7 +173,7 @@ const translationSk = {
   logout: {
     headingText: "Boli ste odhlásení",
     descriptionText:
-      "Boli ste úspešne odhlásení. Teraz môžete webstránku bezpečne opustiť.",
+      "Boli ste úspešne odhlásený/-á. Teraz môžete webstránku bezpečne opustiť.",
   },
   invalidate: {
     headingText: "Zneplatniť prihlasovací odkaz",
@@ -194,7 +194,7 @@ export const applyLocalization = () =>
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-      debug: true,
+      debug: false,
       fallbackLng: "cz",
       interpolation: {
         escapeValue: false,
