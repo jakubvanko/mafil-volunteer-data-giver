@@ -28,7 +28,7 @@ This application was created for [the MAFIL laboratory](https://mafil.ceitec.cz/
 
 Authorization can be performed either as a bearer tohen in the Authorization header, or as a field "access_token" in the body of the request.
 
-#### POST /api/users
+### POST /api/users
 
 **Description:** Create a new volunteer account
 
@@ -58,7 +58,7 @@ Authorization can be performed either as a bearer tohen in the Authorization hea
 }
 ```
 
-#### POST /api/users/tokens
+### POST /api/users/tokens
 
 **Description:** Get a USER token (for other actions)
 
@@ -85,7 +85,7 @@ Authorization can be performed either as a bearer tohen in the Authorization hea
 }
 ```
 
-#### GET /api/users/<userId>
+### GET /api/users/<userId>
 
 **Description:** Get volunteer details
 
@@ -108,7 +108,7 @@ Authorization can be performed either as a bearer tohen in the Authorization hea
 }
 ```
 
-#### DELETE /api/users/<userId>
+### DELETE /api/users/<userId>
 
 **Description:** Delete a volunteer
 
@@ -122,7 +122,7 @@ Authorization can be performed either as a bearer tohen in the Authorization hea
 
 **Response:** 204 - empty
 
-#### PUT /api/users/<userId>/data
+### PUT /api/users/<userId>/data
 
 **Description:** Deliver images from PACS
 
@@ -140,7 +140,7 @@ multipart/form-data:
 
 **Response:** 204 - empty
 
-#### POST /api/users/<userId>/data
+### POST /api/users/<userId>/data
 
 **Description:** Download data package with images
 
@@ -154,7 +154,7 @@ multipart/form-data:
 
 **Response:** 200 - native data download starts
 
-#### GET /api/users/study/<studyInstanceUID>
+### GET /api/users/study/<studyInstanceUID>
 
 **Description:** Get IDs of users with specific studyInstanceUID
 
@@ -172,7 +172,7 @@ multipart/form-data:
 [ user1, user2, user3] // array of users
 ```
 
-#### GET /api/users/secrets
+### GET /api/users/secrets
 
 **Description:** Send login code to volunteer's mobile phone
 
@@ -186,7 +186,7 @@ multipart/form-data:
 
 **Response:** 204 - empty
 
-#### GET /api/users/secrets/details
+### GET /api/users/secrets/details
 
 **Description:** Get details of the sms login code
 
