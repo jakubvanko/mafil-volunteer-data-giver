@@ -31,6 +31,7 @@ services:
       REMINDER_TIME_BEFORE_EXPIRATION: 1w
       SALT_WORK_FACTOR: 10 # Set higher number for better password security
       SECRET_TRY_AMOUNT: 5 # How many tries to submit an SMS code before a new one is needed
+      SECRET_BYTE_SIZE: 5 # The amount of bytes the SMS code will be made up of (1 byte = 2 characters)
       SMS_MAX_AMOUNT: 50
       HASH_PEPPER: "p3Pp3R" # Set another secret string for better password security
       MAIL_SENDER: '"Mafil Dobrovolnik" <mafil@ceitec.muni.cz>'

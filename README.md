@@ -27,6 +27,8 @@ This application was created for [the MAFIL laboratory](https://mafil.ceitec.cz/
    - Save the ".env" file
 4. Run `docker-compose up`
 
+(If there are any problems or some functionality is missing, it may be necessarry to do the step 3 also for the folder "backend" and fill all the variables. However, it should not be needed.)
+
 ## API Endpoints
 
 Authorization can be performed either as a bearer tohen in the Authorization header, or as a field "access_token" in the body of the request.
