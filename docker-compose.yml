@@ -54,7 +54,6 @@ services:
       - 443:443
     restart: always
     environment:
-      REACT_APP_API_URL: https://localhost/api # Url of the backend API (such as https://dobrovolnik.mafil.cz/api)
       SITE_ADDRESS: localhost # Adress of the backend API (such as dobrovolnik.mafil.cz)
 
 volumes:
