@@ -85,7 +85,7 @@ Authorization can be performed either as a bearer tohen in the Authorization hea
 }
 ```
 
-### GET /api/users/<userId>
+### GET /api/users/\<userId>
 
 **Description:** Get volunteer details
 
@@ -108,7 +108,7 @@ Authorization can be performed either as a bearer tohen in the Authorization hea
 }
 ```
 
-### DELETE /api/users/<userId>
+### DELETE /api/users/\<userId>
 
 **Description:** Delete a volunteer
 
@@ -122,7 +122,7 @@ Authorization can be performed either as a bearer tohen in the Authorization hea
 
 **Response:** 204 - empty
 
-### PUT /api/users/<userId>/data
+### PUT /api/users/\<userId>/data
 
 **Description:** Deliver images from PACS
 
@@ -140,7 +140,7 @@ multipart/form-data:
 
 **Response:** 204 - empty
 
-### POST /api/users/<userId>/data
+### POST /api/users/\<userId>/data
 
 **Description:** Download data package with images
 
@@ -154,7 +154,7 @@ multipart/form-data:
 
 **Response:** 200 - native data download starts
 
-### GET /api/users/study/<studyInstanceUID>
+### GET /api/users/study/\<studyInstanceUID>
 
 **Description:** Get IDs of users with specific studyInstanceUID
 
