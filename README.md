@@ -1,6 +1,6 @@
 # **Web application for sending acquired medical (DICOM) data to volunteers**
 
-This application was created for [the MAFIL laboratory](https://mafil.ceitec.cz/en/) as my bachelor's thesis. The entire text of the thesis can be found at **to be added...**.
+This application was created for [the MAFIL laboratory](https://mafil.ceitec.cz/en/) as my bachelor's thesis. The entire text of the thesis can be found [can be found here](https://is.muni.cz/th/onf8p/).
 
 #### Table of Contents
 
